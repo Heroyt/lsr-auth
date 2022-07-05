@@ -1,0 +1,29 @@
+{
+	"name": "lsr/auth",
+	"description": "Laser framework core - Authentication.",
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://packages.laserliga.cz"
+		}
+	],
+	"require-dev": {
+		"roave/security-advisories": "dev-latest",
+		"phpunit/phpunit": "^9.5"
+	},
+	"autoload": {
+		"psr-4": {
+			"Lsr\\Core\\Auth\\": "src/"
+		}
+	},
+	"authors": [
+		{
+			"name": "Tomáš Vojík",
+			"email": "vojik@wboy.cz"
+		}
+	],
+	"require": {
+		"lsr/interfaces": "dev-master",
+		"nette/di": "^3.0"
+	}
+}
