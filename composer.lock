@@ -4,7 +4,7 @@
 		"Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
 		"This file is @generated automatically"
 	],
-	"content-hash": "829d196e011fea3ec4e8134d8d34f4e9",
+	"content-hash": "5eefd84869088a9024a95712db470db8",
 	"packages": [
 		{
 			"name": "dibi/dibi",
@@ -310,16 +310,16 @@
 		},
 		{
 			"name": "lsr/core",
-			"version": "0.1.4",
+			"version": "0.1.5",
 			"source": {
 				"type": "git",
 				"url": "https://github.com/Heroyt/lsr-core.git",
-				"reference": "7a3723f4aba6838120e3e12bedf215db7c55649a"
+				"reference": "389242654832cf77c4ef544215fd51669e4e53e7"
 			},
 			"dist": {
 				"type": "zip",
-				"url": "https://api.github.com/repos/Heroyt/lsr-core/zipball/7a3723f4aba6838120e3e12bedf215db7c55649a",
-				"reference": "7a3723f4aba6838120e3e12bedf215db7c55649a",
+				"url": "https://api.github.com/repos/Heroyt/lsr-core/zipball/389242654832cf77c4ef544215fd51669e4e53e7",
+				"reference": "389242654832cf77c4ef544215fd51669e4e53e7",
 				"shasum": ""
 			},
 			"require": {
@@ -370,10 +370,10 @@
 			],
 			"description": "Laser framework core.",
 			"support": {
-				"source": "https://github.com/Heroyt/lsr-core/tree/v0.1.4",
+				"source": "https://github.com/Heroyt/lsr-core/tree/v0.1.5",
 				"issues": "https://github.com/Heroyt/lsr-core/issues"
 			},
-			"time": "2022-07-20T12:21:34+00:00"
+			"time": "2022-08-25T12:52:23+00:00"
 		},
 		{
 			"name": "lsr/helpers",
