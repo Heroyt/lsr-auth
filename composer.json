@@ -1,5 +1,6 @@
 {
 	"name": "lsr/auth",
+	"version": "0.1.0",
 	"description": "Laser framework core - Authentication.",
 	"repositories": [
 		{
@@ -23,7 +24,9 @@
 		}
 	],
 	"require": {
-		"lsr/interfaces": "dev-master",
-		"nette/di": "^3.0"
+		"lsr/interfaces": "^0.1",
+		"nette/di": "^3.0",
+		"nette/security": "^3.1",
+		"lsr/core": "^0.1.4"
 	}
 }

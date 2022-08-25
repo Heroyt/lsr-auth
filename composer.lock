@@ -4,20 +4,437 @@
 		"Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
 		"This file is @generated automatically"
 	],
-	"content-hash": "313e948fde1b0a1d5e29cc4cc9abf7b9",
+	"content-hash": "829d196e011fea3ec4e8134d8d34f4e9",
 	"packages": [
 		{
-			"name": "lsr/interfaces",
-			"version": "dev-master",
+			"name": "dibi/dibi",
+			"version": "v4.2.6",
 			"source": {
 				"type": "git",
-				"url": "https://github.com/Heroyt/lsr-interfaces.git",
-				"reference": "c07278e9e42d20b1942ccdee5e5c8a40f670a80b"
+				"url": "https://github.com/dg/dibi.git",
+				"reference": "9d5d430d3d04ad8aff0e1570390e9cfbb7f3c538"
 			},
 			"dist": {
 				"type": "zip",
-				"url": "https://api.github.com/repos/Heroyt/lsr-interfaces/zipball/c07278e9e42d20b1942ccdee5e5c8a40f670a80b",
-				"reference": "c07278e9e42d20b1942ccdee5e5c8a40f670a80b",
+				"url": "https://api.github.com/repos/dg/dibi/zipball/9d5d430d3d04ad8aff0e1570390e9cfbb7f3c538",
+				"reference": "9d5d430d3d04ad8aff0e1570390e9cfbb7f3c538",
+				"shasum": ""
+			},
+			"require": {
+				"php": ">=7.2"
+			},
+			"replace": {
+				"dg/dibi": "*"
+			},
+			"require-dev": {
+				"nette/di": "^3.0",
+				"nette/tester": "~2.0",
+				"phpstan/phpstan": "^0.12",
+				"tracy/tracy": "~2.2"
+			},
+			"type": "library",
+			"extra": {
+				"branch-alias": {
+					"dev-master": "4.2-dev"
+				}
+			},
+			"autoload": {
+				"classmap": [
+					"src/"
+				]
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"BSD-3-Clause",
+				"GPL-2.0-only",
+				"GPL-3.0-only"
+			],
+			"authors": [
+				{
+					"name": "David Grudl",
+					"homepage": "https://davidgrudl.com"
+				}
+			],
+			"description": "Dibi is Database Abstraction Library for PHP",
+			"homepage": "https://dibiphp.com",
+			"keywords": [
+				"access",
+				"database",
+				"dbal",
+				"mssql",
+				"mysql",
+				"odbc",
+				"oracle",
+				"pdo",
+				"postgresql",
+				"sqlite",
+				"sqlsrv"
+			],
+			"support": {
+				"issues": "https://github.com/dg/dibi/issues",
+				"source": "https://github.com/dg/dibi/tree/v4.2.6"
+			},
+			"time": "2022-01-19T17:38:15+00:00"
+		},
+		{
+			"name": "gettext/gettext",
+			"version": "v5.7.0",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/php-gettext/Gettext.git",
+				"reference": "8657e580747bb3baacccdcebe69cac094661e404"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/php-gettext/Gettext/zipball/8657e580747bb3baacccdcebe69cac094661e404",
+				"reference": "8657e580747bb3baacccdcebe69cac094661e404",
+				"shasum": ""
+			},
+			"require": {
+				"gettext/languages": "^2.3",
+				"php": "^7.2|^8.0"
+			},
+			"require-dev": {
+				"brick/varexporter": "^0.3.5",
+				"friendsofphp/php-cs-fixer": "^3.2",
+				"oscarotero/php-cs-fixer-config": "^2.0",
+				"phpunit/phpunit": "^8.0|^9.0",
+				"squizlabs/php_codesniffer": "^3.0"
+			},
+			"type": "library",
+			"autoload": {
+				"psr-4": {
+					"Gettext\\": "src"
+				}
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"MIT"
+			],
+			"authors": [
+				{
+					"name": "Oscar Otero",
+					"email": "oom@oscarotero.com",
+					"homepage": "http://oscarotero.com",
+					"role": "Developer"
+				}
+			],
+			"description": "PHP gettext manager",
+			"homepage": "https://github.com/php-gettext/Gettext",
+			"keywords": [
+				"JS",
+				"gettext",
+				"i18n",
+				"mo",
+				"po",
+				"translation"
+			],
+			"support": {
+				"email": "oom@oscarotero.com",
+				"issues": "https://github.com/php-gettext/Gettext/issues",
+				"source": "https://github.com/php-gettext/Gettext/tree/v5.7.0"
+			},
+			"funding": [
+				{
+					"url": "https://paypal.me/oscarotero",
+					"type": "custom"
+				},
+				{
+					"url": "https://github.com/oscarotero",
+					"type": "github"
+				},
+				{
+					"url": "https://www.patreon.com/misteroom",
+					"type": "patreon"
+				}
+			],
+			"time": "2022-07-27T19:54:55+00:00"
+		},
+		{
+			"name": "gettext/languages",
+			"version": "2.9.0",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/php-gettext/Languages.git",
+				"reference": "ed56dd2c7f4024cc953ed180d25f02f2640e3ffa"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/php-gettext/Languages/zipball/ed56dd2c7f4024cc953ed180d25f02f2640e3ffa",
+				"reference": "ed56dd2c7f4024cc953ed180d25f02f2640e3ffa",
+				"shasum": ""
+			},
+			"require": {
+				"php": ">=5.3"
+			},
+			"require-dev": {
+				"phpunit/phpunit": "^4.8 || ^5.7 || ^6.5 || ^7.5 || ^8.4"
+			},
+			"bin": [
+				"bin/export-plural-rules"
+			],
+			"type": "library",
+			"autoload": {
+				"psr-4": {
+					"Gettext\\Languages\\": "src/"
+				}
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"MIT"
+			],
+			"authors": [
+				{
+					"name": "Michele Locati",
+					"email": "mlocati@gmail.com",
+					"role": "Developer"
+				}
+			],
+			"description": "gettext languages with plural rules",
+			"homepage": "https://github.com/php-gettext/Languages",
+			"keywords": [
+				"cldr",
+				"i18n",
+				"internationalization",
+				"l10n",
+				"language",
+				"languages",
+				"localization",
+				"php",
+				"plural",
+				"plural rules",
+				"plurals",
+				"translate",
+				"translations",
+				"unicode"
+			],
+			"support": {
+				"issues": "https://github.com/php-gettext/Languages/issues",
+				"source": "https://github.com/php-gettext/Languages/tree/2.9.0"
+			},
+			"funding": [
+				{
+					"url": "https://paypal.me/mlocati",
+					"type": "custom"
+				},
+				{
+					"url": "https://github.com/mlocati",
+					"type": "github"
+				}
+			],
+			"time": "2021-11-11T17:30:39+00:00"
+		},
+		{
+			"name": "latte/latte",
+			"version": "v3.0.0",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/nette/latte.git",
+				"reference": "0a3f7fb3f930733c5cbc8d2f67943006d6ab2652"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/nette/latte/zipball/0a3f7fb3f930733c5cbc8d2f67943006d6ab2652",
+				"reference": "0a3f7fb3f930733c5cbc8d2f67943006d6ab2652",
+				"shasum": ""
+			},
+			"require": {
+				"ext-json": "*",
+				"ext-tokenizer": "*",
+				"php": ">=8.0 <8.2"
+			},
+			"conflict": {
+				"nette/application": "<2.4.1"
+			},
+			"require-dev": {
+				"nette/php-generator": "^3.3.4",
+				"nette/tester": "^2.0",
+				"nette/utils": "^3.0",
+				"phpstan/phpstan": "^1",
+				"tracy/tracy": "^2.3"
+			},
+			"suggest": {
+				"ext-fileinfo": "to use filter |datastream",
+				"ext-iconv": "to use filters |reverse, |substring",
+				"ext-mbstring": "to use filters like lower, upper, capitalize, ...",
+				"nette/php-generator": "to use tag {templatePrint}",
+				"nette/utils": "to use filter |webalize"
+			},
+			"bin": [
+				"bin/latte-lint"
+			],
+			"type": "library",
+			"extra": {
+				"branch-alias": {
+					"dev-master": "3.0-dev"
+				}
+			},
+			"autoload": {
+				"classmap": [
+					"src/"
+				]
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"BSD-3-Clause",
+				"GPL-2.0-only",
+				"GPL-3.0-only"
+			],
+			"authors": [
+				{
+					"name": "David Grudl",
+					"homepage": "https://davidgrudl.com"
+				},
+				{
+					"name": "Nette Community",
+					"homepage": "https://nette.org/contributors"
+				}
+			],
+			"description": "☕ Latte: the intuitive and fast template engine for those who want the most secure PHP sites. Introduces context-sensitive escaping.",
+			"homepage": "https://latte.nette.org",
+			"keywords": [
+				"context-sensitive",
+				"engine",
+				"escaping",
+				"html",
+				"nette",
+				"security",
+				"template",
+				"twig"
+			],
+			"support": {
+				"issues": "https://github.com/nette/latte/issues",
+				"source": "https://github.com/nette/latte/tree/v3.0.0"
+			},
+			"time": "2022-05-17T20:14:20+00:00"
+		},
+		{
+			"name": "lsr/core",
+			"version": "0.1.4",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/Heroyt/lsr-core.git",
+				"reference": "7a3723f4aba6838120e3e12bedf215db7c55649a"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/Heroyt/lsr-core/zipball/7a3723f4aba6838120e3e12bedf215db7c55649a",
+				"reference": "7a3723f4aba6838120e3e12bedf215db7c55649a",
+				"shasum": ""
+			},
+			"require": {
+				"dibi/dibi": "^4.2",
+				"ext-ctype": "*",
+				"ext-fileinfo": "*",
+				"ext-gettext": "*",
+				"ext-mbstring": "*",
+				"ext-pdo_sqlite": "*",
+				"ext-simplexml": "*",
+				"ext-zip": "*",
+				"latte/latte": "3.0.0",
+				"lsr/interfaces": "^0.1",
+				"lsr/logging": "^0.1",
+				"lsr/request": "^0.1",
+				"lsr/routing": "^0.1",
+				"nette/caching": "^3.1",
+				"nette/di": "^3.0",
+				"nette/http": "^3.1"
+			},
+			"require-dev": {
+				"phpstan/extension-installer": "^1.1",
+				"phpstan/phpstan": "^1.8",
+				"phpstan/phpstan-dibi": "^1.0",
+				"phpstan/phpstan-nette": "^1.0",
+				"phpunit/phpunit": "^9.5",
+				"roave/security-advisories": "dev-latest"
+			},
+			"type": "library",
+			"autoload": {
+				"psr-4": {
+					"Lsr\\Core\\": "src/"
+				}
+			},
+			"scripts": {
+				"test": [
+					"./vendor/bin/phpunit"
+				],
+				"docs": [
+					"doxygen"
+				]
+			},
+			"authors": [
+				{
+					"name": "Tomáš Vojík",
+					"email": "vojik@wboy.cz"
+				}
+			],
+			"description": "Laser framework core.",
+			"support": {
+				"source": "https://github.com/Heroyt/lsr-core/tree/v0.1.4",
+				"issues": "https://github.com/Heroyt/lsr-core/issues"
+			},
+			"time": "2022-07-20T12:21:34+00:00"
+		},
+		{
+			"name": "lsr/helpers",
+			"version": "0.1.1",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/Heroyt/lsr-helpers.git",
+				"reference": "b733fb0e4215080018bfee42fdff6f9fa95c83d6"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/Heroyt/lsr-helpers/zipball/b733fb0e4215080018bfee42fdff6f9fa95c83d6",
+				"reference": "b733fb0e4215080018bfee42fdff6f9fa95c83d6",
+				"shasum": ""
+			},
+			"require": {
+				"gettext/gettext": "^5.6",
+				"lsr/interfaces": "^0.1",
+				"nette/utils": "^3.2",
+				"php": ">=8.1",
+				"tracy/tracy": "^2.8"
+			},
+			"require-dev": {
+				"phpunit/phpunit": "^9.5",
+				"roave/security-advisories": "dev-latest"
+			},
+			"type": "library",
+			"autoload": {
+				"psr-4": {
+					"Lsr\\Helpers\\": "src/",
+					"Lsr\\Exceptions\\": "Exceptions/"
+				},
+				"files": [
+					"includes/functions.php"
+				]
+			},
+			"authors": [
+				{
+					"name": "Tomáš Vojík",
+					"email": "vojik@wboy.cz"
+				}
+			],
+			"description": "Laser framework core - Helpers.",
+			"support": {
+				"source": "https://github.com/Heroyt/lsr-helpers/tree/v0.1.1",
+				"issues": "https://github.com/Heroyt/lsr-helpers/issues"
+			},
+			"time": "2022-07-18T06:23:24+00:00"
+		},
+		{
+			"name": "lsr/interfaces",
+			"version": "0.1.1",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/Heroyt/lsr-interfaces.git",
+				"reference": "80e153f0f423d120fcf37ba93c4b688de0dc7ec1"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/Heroyt/lsr-interfaces/zipball/80e153f0f423d120fcf37ba93c4b688de0dc7ec1",
+				"reference": "80e153f0f423d120fcf37ba93c4b688de0dc7ec1",
 				"shasum": ""
 			},
 			"require": {
@@ -26,7 +443,6 @@
 			"require-dev": {
 				"phpunit/phpunit": "^9.5"
 			},
-			"default-branch": true,
 			"type": "library",
 			"autoload": {
 				"psr-4": {
@@ -41,10 +457,205 @@
 			],
 			"description": "Laser framework core - Interfaces.",
 			"support": {
-				"source": "https://github.com/Heroyt/lsr-interfaces/tree/master",
+				"source": "https://github.com/Heroyt/lsr-interfaces/tree/v0.1.1",
 				"issues": "https://github.com/Heroyt/lsr-interfaces/issues"
 			},
-			"time": "2022-06-26T16:32:56+00:00"
+			"time": "2022-07-18T06:23:24+00:00"
+		},
+		{
+			"name": "lsr/logging",
+			"version": "0.1.3",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/Heroyt/lsr-logging.git",
+				"reference": "377530e124bf58a95e7abf34c6e002f042876b02"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/Heroyt/lsr-logging/zipball/377530e124bf58a95e7abf34c6e002f042876b02",
+				"reference": "377530e124bf58a95e7abf34c6e002f042876b02",
+				"shasum": ""
+			},
+			"require": {
+				"dibi/dibi": "^4.2",
+				"lsr/helpers": "^0.1",
+				"psr/log": "*"
+			},
+			"require-dev": {
+				"phpunit/phpunit": "^9.5",
+				"roave/security-advisories": "dev-latest"
+			},
+			"type": "library",
+			"autoload": {
+				"psr-4": {
+					"Lsr\\Logging\\": "src/"
+				}
+			},
+			"authors": [
+				{
+					"name": "Tomáš Vojík",
+					"email": "vojik@wboy.cz"
+				}
+			],
+			"description": "Laser framework core - Logging",
+			"support": {
+				"source": "https://github.com/Heroyt/lsr-logging/tree/v0.1.3",
+				"issues": "https://github.com/Heroyt/lsr-logging/issues"
+			},
+			"time": "2022-08-23T16:55:40+00:00"
+		},
+		{
+			"name": "lsr/request",
+			"version": "0.1.1",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/Heroyt/lsr-requests.git",
+				"reference": "78aa5b9553badb592ba73be7364e7cb7d3f85560"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/Heroyt/lsr-requests/zipball/78aa5b9553badb592ba73be7364e7cb7d3f85560",
+				"reference": "78aa5b9553badb592ba73be7364e7cb7d3f85560",
+				"shasum": ""
+			},
+			"require": {
+				"lsr/helpers": "^0.1",
+				"lsr/interfaces": "^0.1",
+				"lsr/routing": "^0.1",
+				"php": ">=8.1"
+			},
+			"require-dev": {
+				"phpunit/phpunit": "^9.5"
+			},
+			"type": "library",
+			"autoload": {
+				"psr-4": {
+					"Lsr\\Core\\Requests\\": "src/"
+				}
+			},
+			"authors": [
+				{
+					"name": "Tomáš Vojík",
+					"email": "vojik@wboy.cz"
+				}
+			],
+			"description": "Laser framework core - Requests.",
+			"support": {
+				"source": "https://github.com/Heroyt/lsr-requests/tree/v0.1.1",
+				"issues": "https://github.com/Heroyt/lsr-requests/issues"
+			},
+			"time": "2022-07-18T06:23:24+00:00"
+		},
+		{
+			"name": "lsr/routing",
+			"version": "0.1.1",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/Heroyt/lsr-routing.git",
+				"reference": "fad365a91efc61cce056a2c18b5e88b204e48788"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/Heroyt/lsr-routing/zipball/fad365a91efc61cce056a2c18b5e88b204e48788",
+				"reference": "fad365a91efc61cce056a2c18b5e88b204e48788",
+				"shasum": ""
+			},
+			"require": {
+				"lsr/interfaces": "^0.1",
+				"php": ">=8.1"
+			},
+			"require-dev": {
+				"phpunit/phpunit": "^9.5"
+			},
+			"type": "library",
+			"autoload": {
+				"psr-4": {
+					"Lsr\\Core\\Routing\\": "src/"
+				}
+			},
+			"authors": [
+				{
+					"name": "Tomáš Vojík",
+					"email": "vojik@wboy.cz"
+				}
+			],
+			"description": "Laser framework core - Routing.",
+			"support": {
+				"source": "https://github.com/Heroyt/lsr-routing/tree/v0.1.1",
+				"issues": "https://github.com/Heroyt/lsr-routing/issues"
+			},
+			"time": "2022-07-18T06:23:24+00:00"
+		},
+		{
+			"name": "nette/caching",
+			"version": "v3.1.3",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/nette/caching.git",
+				"reference": "7a59a7762e43ba6d8e4aa0484eaaf6a40835a4ad"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/nette/caching/zipball/7a59a7762e43ba6d8e4aa0484eaaf6a40835a4ad",
+				"reference": "7a59a7762e43ba6d8e4aa0484eaaf6a40835a4ad",
+				"shasum": ""
+			},
+			"require": {
+				"nette/finder": "^2.4 || ^3.0",
+				"nette/utils": "^2.4 || ^3.0",
+				"php": ">=7.2 <8.2"
+			},
+			"require-dev": {
+				"latte/latte": "^2.11 || ^3.0",
+				"nette/di": "^v3.0",
+				"nette/tester": "^2.0",
+				"phpstan/phpstan": "^0.12",
+				"tracy/tracy": "^2.4"
+			},
+			"suggest": {
+				"ext-pdo_sqlite": "to use SQLiteStorage or SQLiteJournal"
+			},
+			"type": "library",
+			"extra": {
+				"branch-alias": {
+					"dev-master": "3.1-dev"
+				}
+			},
+			"autoload": {
+				"classmap": [
+					"src/"
+				]
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"BSD-3-Clause",
+				"GPL-2.0-only",
+				"GPL-3.0-only"
+			],
+			"authors": [
+				{
+					"name": "David Grudl",
+					"homepage": "https://davidgrudl.com"
+				},
+				{
+					"name": "Nette Community",
+					"homepage": "https://nette.org/contributors"
+				}
+			],
+			"description": "⏱ Nette Caching: library with easy-to-use API and many cache backends.",
+			"homepage": "https://nette.org",
+			"keywords": [
+				"cache",
+				"journal",
+				"memcached",
+				"nette",
+				"sqlite"
+			],
+			"support": {
+				"issues": "https://github.com/nette/caching/issues",
+				"source": "https://github.com/nette/caching/tree/v3.1.3"
+			},
+			"time": "2022-05-17T18:30:21+00:00"
 		},
 		{
 			"name": "nette/di",
@@ -187,6 +798,84 @@
 				"source": "https://github.com/nette/finder/tree/v2.5.3"
 			},
 			"time": "2021-12-12T17:43:24+00:00"
+		},
+		{
+			"name": "nette/http",
+			"version": "v3.1.6",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/nette/http.git",
+				"reference": "65bfe68f9c611e7cd1935a5f794a560c52e4614f"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/nette/http/zipball/65bfe68f9c611e7cd1935a5f794a560c52e4614f",
+				"reference": "65bfe68f9c611e7cd1935a5f794a560c52e4614f",
+				"shasum": ""
+			},
+			"require": {
+				"nette/utils": "^3.1",
+				"php": ">=7.2 <8.2"
+			},
+			"conflict": {
+				"nette/di": "<3.0.3",
+				"nette/schema": "<1.2"
+			},
+			"require-dev": {
+				"nette/di": "^3.0",
+				"nette/security": "^3.0",
+				"nette/tester": "^2.0",
+				"phpstan/phpstan": "^0.12",
+				"tracy/tracy": "^2.4"
+			},
+			"suggest": {
+				"ext-fileinfo": "to detect type of uploaded files"
+			},
+			"type": "library",
+			"extra": {
+				"branch-alias": {
+					"dev-master": "3.1-dev"
+				}
+			},
+			"autoload": {
+				"classmap": [
+					"src/"
+				]
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"BSD-3-Clause",
+				"GPL-2.0-only",
+				"GPL-3.0-only"
+			],
+			"authors": [
+				{
+					"name": "David Grudl",
+					"homepage": "https://davidgrudl.com"
+				},
+				{
+					"name": "Nette Community",
+					"homepage": "https://nette.org/contributors"
+				}
+			],
+			"description": "🌐 Nette Http: abstraction for HTTP request, response and session. Provides careful data sanitization and utility for URL and cookies manipulation.",
+			"homepage": "https://nette.org",
+			"keywords": [
+				"cookies",
+				"http",
+				"nette",
+				"proxy",
+				"request",
+				"response",
+				"security",
+				"session",
+				"url"
+			],
+			"support": {
+				"issues": "https://github.com/nette/http/issues",
+				"source": "https://github.com/nette/http/tree/v3.1.6"
+			},
+			"time": "2022-04-02T16:05:07+00:00"
 		},
 		{
 			"name": "nette/neon",
@@ -454,6 +1143,76 @@
 			"time": "2021-10-15T11:40:02+00:00"
 		},
 		{
+			"name": "nette/security",
+			"version": "v3.1.5",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/nette/security.git",
+				"reference": "c120893f561b09494486c66594720b2abcb099b2"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/nette/security/zipball/c120893f561b09494486c66594720b2abcb099b2",
+				"reference": "c120893f561b09494486c66594720b2abcb099b2",
+				"shasum": ""
+			},
+			"require": {
+				"nette/utils": "^3.2.1",
+				"php": ">=7.2 <8.2"
+			},
+			"conflict": {
+				"nette/di": "<3.0-stable",
+				"nette/http": "<3.1.3"
+			},
+			"require-dev": {
+				"nette/di": "^3.0.1",
+				"nette/http": "^3.0.0",
+				"nette/tester": "^2.0",
+				"phpstan/phpstan-nette": "^0.12",
+				"tracy/tracy": "^2.4"
+			},
+			"type": "library",
+			"extra": {
+				"branch-alias": {
+					"dev-master": "3.1-dev"
+				}
+			},
+			"autoload": {
+				"classmap": [
+					"src/"
+				]
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"BSD-3-Clause",
+				"GPL-2.0-only",
+				"GPL-3.0-only"
+			],
+			"authors": [
+				{
+					"name": "David Grudl",
+					"homepage": "https://davidgrudl.com"
+				},
+				{
+					"name": "Nette Community",
+					"homepage": "https://nette.org/contributors"
+				}
+			],
+			"description": "🔑 Nette Security: provides authentication, authorization and a role-based access control management via ACL (Access Control List)",
+			"homepage": "https://nette.org",
+			"keywords": [
+				"Authentication",
+				"acl",
+				"authorization",
+				"nette"
+			],
+			"support": {
+				"issues": "https://github.com/nette/security/issues",
+				"source": "https://github.com/nette/security/tree/v3.1.5"
+			},
+			"time": "2021-09-20T15:20:25+00:00"
+		},
+		{
 			"name": "nette/utils",
 			"version": "v3.2.7",
 			"source": {
@@ -537,6 +1296,130 @@
 				"source": "https://github.com/nette/utils/tree/v3.2.7"
 			},
 			"time": "2022-01-24T11:29:14+00:00"
+		},
+		{
+			"name": "psr/log",
+			"version": "3.0.0",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/php-fig/log.git",
+				"reference": "fe5ea303b0887d5caefd3d431c3e61ad47037001"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/php-fig/log/zipball/fe5ea303b0887d5caefd3d431c3e61ad47037001",
+				"reference": "fe5ea303b0887d5caefd3d431c3e61ad47037001",
+				"shasum": ""
+			},
+			"require": {
+				"php": ">=8.0.0"
+			},
+			"type": "library",
+			"extra": {
+				"branch-alias": {
+					"dev-master": "3.x-dev"
+				}
+			},
+			"autoload": {
+				"psr-4": {
+					"Psr\\Log\\": "src"
+				}
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"MIT"
+			],
+			"authors": [
+				{
+					"name": "PHP-FIG",
+					"homepage": "https://www.php-fig.org/"
+				}
+			],
+			"description": "Common interface for logging libraries",
+			"homepage": "https://github.com/php-fig/log",
+			"keywords": [
+				"log",
+				"psr",
+				"psr-3"
+			],
+			"support": {
+				"source": "https://github.com/php-fig/log/tree/3.0.0"
+			},
+			"time": "2021-07-14T16:46:02+00:00"
+		},
+		{
+			"name": "tracy/tracy",
+			"version": "v2.9.4",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/nette/tracy.git",
+				"reference": "0ed605329b095f5f5fe2db2adc3d1ee80c917294"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/nette/tracy/zipball/0ed605329b095f5f5fe2db2adc3d1ee80c917294",
+				"reference": "0ed605329b095f5f5fe2db2adc3d1ee80c917294",
+				"shasum": ""
+			},
+			"require": {
+				"ext-json": "*",
+				"ext-session": "*",
+				"php": ">=7.2 <8.2"
+			},
+			"conflict": {
+				"nette/di": "<3.0"
+			},
+			"require-dev": {
+				"latte/latte": "^2.5",
+				"nette/di": "^3.0",
+				"nette/mail": "^3.0",
+				"nette/tester": "^2.2",
+				"nette/utils": "^3.0",
+				"phpstan/phpstan": "^1.0",
+				"psr/log": "^1.0 || ^2.0 || ^3.0"
+			},
+			"type": "library",
+			"extra": {
+				"branch-alias": {
+					"dev-master": "2.9-dev"
+				}
+			},
+			"autoload": {
+				"files": [
+					"src/Tracy/functions.php"
+				],
+				"classmap": [
+					"src"
+				]
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"BSD-3-Clause"
+			],
+			"authors": [
+				{
+					"name": "David Grudl",
+					"homepage": "https://davidgrudl.com"
+				},
+				{
+					"name": "Nette Community",
+					"homepage": "https://nette.org/contributors"
+				}
+			],
+			"description": "😎  Tracy: the addictive tool to ease debugging PHP code for cool developers. Friendly design, logging, profiler, advanced features like debugging AJAX calls or CLI support. You will love it.",
+			"homepage": "https://tracy.nette.org",
+			"keywords": [
+				"Xdebug",
+				"debug",
+				"debugger",
+				"nette",
+				"profiler"
+			],
+			"support": {
+				"issues": "https://github.com/nette/tracy/issues",
+				"source": "https://github.com/nette/tracy/tree/v2.9.4"
+			},
+			"time": "2022-07-19T14:06:15+00:00"
 		}
 	],
 	"packages-dev": [
@@ -837,251 +1720,24 @@
 			"time": "2022-02-21T01:04:05+00:00"
 		},
 		{
-			"name": "phpdocumentor/reflection-common",
-			"version": "2.2.0",
-			"source": {
-				"type": "git",
-				"url": "https://github.com/phpDocumentor/ReflectionCommon.git",
-				"reference": "1d01c49d4ed62f25aa84a747ad35d5a16924662b"
-			},
-			"dist": {
-				"type": "zip",
-				"url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/1d01c49d4ed62f25aa84a747ad35d5a16924662b",
-				"reference": "1d01c49d4ed62f25aa84a747ad35d5a16924662b",
-				"shasum": ""
-			},
-			"require": {
-				"php": "^7.2 || ^8.0"
-			},
-			"type": "library",
-			"extra": {
-				"branch-alias": {
-					"dev-2.x": "2.x-dev"
-				}
-			},
-			"autoload": {
-				"psr-4": {
-					"phpDocumentor\\Reflection\\": "src/"
-				}
-			},
-			"notification-url": "https://packagist.org/downloads/",
-			"license": [
-				"MIT"
-			],
-			"authors": [
-				{
-					"name": "Jaap van Otterdijk",
-					"email": "opensource@ijaap.nl"
-				}
-			],
-			"description": "Common reflection classes used by phpdocumentor to reflect the code structure",
-			"homepage": "http://www.phpdoc.org",
-			"keywords": [
-				"FQSEN",
-				"phpDocumentor",
-				"phpdoc",
-				"reflection",
-				"static analysis"
-			],
-			"support": {
-				"issues": "https://github.com/phpDocumentor/ReflectionCommon/issues",
-				"source": "https://github.com/phpDocumentor/ReflectionCommon/tree/2.x"
-			},
-			"time": "2020-06-27T09:03:43+00:00"
-		},
-		{
-			"name": "phpdocumentor/reflection-docblock",
-			"version": "5.3.0",
-			"source": {
-				"type": "git",
-				"url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-				"reference": "622548b623e81ca6d78b721c5e029f4ce664f170"
-			},
-			"dist": {
-				"type": "zip",
-				"url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/622548b623e81ca6d78b721c5e029f4ce664f170",
-				"reference": "622548b623e81ca6d78b721c5e029f4ce664f170",
-				"shasum": ""
-			},
-			"require": {
-				"ext-filter": "*",
-				"php": "^7.2 || ^8.0",
-				"phpdocumentor/reflection-common": "^2.2",
-				"phpdocumentor/type-resolver": "^1.3",
-				"webmozart/assert": "^1.9.1"
-			},
-			"require-dev": {
-				"mockery/mockery": "~1.3.2",
-				"psalm/phar": "^4.8"
-			},
-			"type": "library",
-			"extra": {
-				"branch-alias": {
-					"dev-master": "5.x-dev"
-				}
-			},
-			"autoload": {
-				"psr-4": {
-					"phpDocumentor\\Reflection\\": "src"
-				}
-			},
-			"notification-url": "https://packagist.org/downloads/",
-			"license": [
-				"MIT"
-			],
-			"authors": [
-				{
-					"name": "Mike van Riel",
-					"email": "me@mikevanriel.com"
-				},
-				{
-					"name": "Jaap van Otterdijk",
-					"email": "account@ijaap.nl"
-				}
-			],
-			"description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-			"support": {
-				"issues": "https://github.com/phpDocumentor/ReflectionDocBlock/issues",
-				"source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/5.3.0"
-			},
-			"time": "2021-10-19T17:43:47+00:00"
-		},
-		{
-			"name": "phpdocumentor/type-resolver",
-			"version": "1.6.1",
-			"source": {
-				"type": "git",
-				"url": "https://github.com/phpDocumentor/TypeResolver.git",
-				"reference": "77a32518733312af16a44300404e945338981de3"
-			},
-			"dist": {
-				"type": "zip",
-				"url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/77a32518733312af16a44300404e945338981de3",
-				"reference": "77a32518733312af16a44300404e945338981de3",
-				"shasum": ""
-			},
-			"require": {
-				"php": "^7.2 || ^8.0",
-				"phpdocumentor/reflection-common": "^2.0"
-			},
-			"require-dev": {
-				"ext-tokenizer": "*",
-				"psalm/phar": "^4.8"
-			},
-			"type": "library",
-			"extra": {
-				"branch-alias": {
-					"dev-1.x": "1.x-dev"
-				}
-			},
-			"autoload": {
-				"psr-4": {
-					"phpDocumentor\\Reflection\\": "src"
-				}
-			},
-			"notification-url": "https://packagist.org/downloads/",
-			"license": [
-				"MIT"
-			],
-			"authors": [
-				{
-					"name": "Mike van Riel",
-					"email": "me@mikevanriel.com"
-				}
-			],
-			"description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
-			"support": {
-				"issues": "https://github.com/phpDocumentor/TypeResolver/issues",
-				"source": "https://github.com/phpDocumentor/TypeResolver/tree/1.6.1"
-			},
-			"time": "2022-03-15T21:29:03+00:00"
-		},
-		{
-			"name": "phpspec/prophecy",
-			"version": "v1.15.0",
-			"source": {
-				"type": "git",
-				"url": "https://github.com/phpspec/prophecy.git",
-				"reference": "bbcd7380b0ebf3961ee21409db7b38bc31d69a13"
-			},
-			"dist": {
-				"type": "zip",
-				"url": "https://api.github.com/repos/phpspec/prophecy/zipball/bbcd7380b0ebf3961ee21409db7b38bc31d69a13",
-				"reference": "bbcd7380b0ebf3961ee21409db7b38bc31d69a13",
-				"shasum": ""
-			},
-			"require": {
-				"doctrine/instantiator": "^1.2",
-				"php": "^7.2 || ~8.0, <8.2",
-				"phpdocumentor/reflection-docblock": "^5.2",
-				"sebastian/comparator": "^3.0 || ^4.0",
-				"sebastian/recursion-context": "^3.0 || ^4.0"
-			},
-			"require-dev": {
-				"phpspec/phpspec": "^6.0 || ^7.0",
-				"phpunit/phpunit": "^8.0 || ^9.0"
-			},
-			"type": "library",
-			"extra": {
-				"branch-alias": {
-					"dev-master": "1.x-dev"
-				}
-			},
-			"autoload": {
-				"psr-4": {
-					"Prophecy\\": "src/Prophecy"
-				}
-			},
-			"notification-url": "https://packagist.org/downloads/",
-			"license": [
-				"MIT"
-			],
-			"authors": [
-				{
-					"name": "Konstantin Kudryashov",
-					"email": "ever.zet@gmail.com",
-					"homepage": "http://everzet.com"
-				},
-				{
-					"name": "Marcello Duarte",
-					"email": "marcello.duarte@gmail.com"
-				}
-			],
-			"description": "Highly opinionated mocking framework for PHP 5.3+",
-			"homepage": "https://github.com/phpspec/prophecy",
-			"keywords": [
-				"Double",
-				"Dummy",
-				"fake",
-				"mock",
-				"spy",
-				"stub"
-			],
-			"support": {
-				"issues": "https://github.com/phpspec/prophecy/issues",
-				"source": "https://github.com/phpspec/prophecy/tree/v1.15.0"
-			},
-			"time": "2021-12-08T12:19:24+00:00"
-		},
-		{
 			"name": "phpunit/php-code-coverage",
-			"version": "9.2.15",
+			"version": "9.2.16",
 			"source": {
 				"type": "git",
 				"url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-				"reference": "2e9da11878c4202f97915c1cb4bb1ca318a63f5f"
+				"reference": "2593003befdcc10db5e213f9f28814f5aa8ac073"
 			},
 			"dist": {
 				"type": "zip",
-				"url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/2e9da11878c4202f97915c1cb4bb1ca318a63f5f",
-				"reference": "2e9da11878c4202f97915c1cb4bb1ca318a63f5f",
+				"url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/2593003befdcc10db5e213f9f28814f5aa8ac073",
+				"reference": "2593003befdcc10db5e213f9f28814f5aa8ac073",
 				"shasum": ""
 			},
 			"require": {
 				"ext-dom": "*",
 				"ext-libxml": "*",
 				"ext-xmlwriter": "*",
-				"nikic/php-parser": "^4.13.0",
+				"nikic/php-parser": "^4.14",
 				"php": ">=7.3",
 				"phpunit/php-file-iterator": "^3.0.3",
 				"phpunit/php-text-template": "^2.0.2",
@@ -1130,7 +1786,7 @@
 			],
 			"support": {
 				"issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-				"source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.15"
+				"source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.16"
 			},
 			"funding": [
 				{
@@ -1138,7 +1794,7 @@
 					"type": "github"
 				}
 			],
-			"time": "2022-03-07T09:28:20+00:00"
+			"time": "2022-08-20T05:26:47+00:00"
 		},
 		{
 			"name": "phpunit/php-file-iterator",
@@ -1383,16 +2039,16 @@
 		},
 		{
 			"name": "phpunit/phpunit",
-			"version": "9.5.21",
+			"version": "9.5.23",
 			"source": {
 				"type": "git",
 				"url": "https://github.com/sebastianbergmann/phpunit.git",
-				"reference": "0e32b76be457de00e83213528f6bb37e2a38fcb1"
+				"reference": "888556852e7e9bbeeedb9656afe46118765ade34"
 			},
 			"dist": {
 				"type": "zip",
-				"url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0e32b76be457de00e83213528f6bb37e2a38fcb1",
-				"reference": "0e32b76be457de00e83213528f6bb37e2a38fcb1",
+				"url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/888556852e7e9bbeeedb9656afe46118765ade34",
+				"reference": "888556852e7e9bbeeedb9656afe46118765ade34",
 				"shasum": ""
 			},
 			"require": {
@@ -1407,7 +2063,6 @@
 				"phar-io/manifest": "^2.0.3",
 				"phar-io/version": "^3.0.2",
 				"php": ">=7.3",
-				"phpspec/prophecy": "^1.12.1",
 				"phpunit/php-code-coverage": "^9.2.13",
 				"phpunit/php-file-iterator": "^3.0.5",
 				"phpunit/php-invoker": "^3.1.1",
@@ -1424,9 +2079,6 @@
 				"sebastian/resource-operations": "^3.0.3",
 				"sebastian/type": "^3.0",
 				"sebastian/version": "^3.0.2"
-			},
-			"require-dev": {
-				"phpspec/prophecy-phpunit": "^2.0.1"
 			},
 			"suggest": {
 				"ext-soap": "*",
@@ -1469,7 +2121,7 @@
 			],
 			"support": {
 				"issues": "https://github.com/sebastianbergmann/phpunit/issues",
-				"source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.21"
+				"source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.23"
 			},
 			"funding": [
 				{
@@ -1481,7 +2133,7 @@
 					"type": "github"
 				}
 			],
-			"time": "2022-06-19T12:14:25+00:00"
+			"time": "2022-08-22T14:01:36+00:00"
 		},
 		{
 			"name": "roave/security-advisories",
@@ -1489,18 +2141,19 @@
 			"source": {
 				"type": "git",
 				"url": "https://github.com/Roave/SecurityAdvisories.git",
-				"reference": "7a8c86df136ffe6bd7bc4655d15629a87e5bd022"
+				"reference": "bd4a45f60f097f0c44f77c6d72caa24ebc9b9f66"
 			},
 			"dist": {
 				"type": "zip",
-				"url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/7a8c86df136ffe6bd7bc4655d15629a87e5bd022",
-				"reference": "7a8c86df136ffe6bd7bc4655d15629a87e5bd022",
+				"url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/bd4a45f60f097f0c44f77c6d72caa24ebc9b9f66",
+				"reference": "bd4a45f60f097f0c44f77c6d72caa24ebc9b9f66",
 				"shasum": ""
 			},
 			"conflict": {
 				"3f/pygmentize": "<1.2",
 				"admidio/admidio": "<4.1.9",
 				"adodb/adodb-php": "<=5.20.20|>=5.21,<=5.21.3",
+				"aheinze/cockpit": "<=2.2.1",
 				"akaunting/akaunting": "<2.1.13",
 				"alextselegidis/easyappointments": "<=1.4.3",
 				"alterphp/easyadmin-extension-bundle": ">=1.2,<1.2.11|>=1.3,<1.3.1",
@@ -1544,6 +2197,7 @@
 				"codeception/codeception": "<3.1.3|>=4,<4.1.22",
 				"codeigniter/framework": "<=3.0.6",
 				"codeigniter4/framework": "<4.1.9",
+				"codeigniter4/shield": "= 1.0.0-beta",
 				"codiad/codiad": "<=2.8.4",
 				"composer/composer": "<1.10.26|>=2-alpha.1,<2.2.12|>=2.3,<2.3.5",
 				"concrete5/concrete5": "<9",
@@ -1556,7 +2210,7 @@
 				"contao/managed-edition": "<=1.5",
 				"craftcms/cms": "<3.7.36",
 				"croogo/croogo": "<3.0.7",
-				"cuyz/valinor": ">=0.5,<0.7",
+				"cuyz/valinor": "<0.12",
 				"czproject/git-php": "<4.0.3",
 				"darylldoyle/safe-svg": "<1.9.10",
 				"datadog/dd-trace": ">=0.30,<0.30.2",
@@ -1573,8 +2227,8 @@
 				"doctrine/mongodb-odm-bundle": ">=2,<3.0.1",
 				"doctrine/orm": ">=2,<2.4.8|>=2.5,<2.5.1|>=2.8.3,<2.8.4",
 				"dolibarr/dolibarr": "<16|= 12.0.5|>= 3.3.beta1, < 13.0.2",
-				"dompdf/dompdf": "<1.2.1",
-				"drupal/core": ">=7,<7.88|>=8,<9.2.13|>=9.3,<9.3.6",
+				"dompdf/dompdf": "<2",
+				"drupal/core": ">=7,<7.91|>=8,<9.3.19|>=9.4,<9.4.3",
 				"drupal/drupal": ">=7,<7.80|>=8,<8.9.16|>=9,<9.1.12|>=9.2,<9.2.4",
 				"dweeves/magmi": "<=0.7.24",
 				"ecodev/newsletter": "<=4",
@@ -1612,6 +2266,7 @@
 				"flarum/sticky": ">=0.1-beta.14,<=0.1-beta.15",
 				"flarum/tags": "<=0.1-beta.13",
 				"fluidtypo3/vhs": "<5.1.1",
+				"fof/byobu": ">=0.3-beta.2,<1.1.7",
 				"fof/upload": "<1.2.3",
 				"fooman/tcpdf": "<6.2.22",
 				"forkcms/forkcms": "<5.11.1",
@@ -1626,7 +2281,7 @@
 				"fuel/core": "<1.8.1",
 				"gaoming13/wechat-php-sdk": "<=1.10.2",
 				"genix/cms": "<=1.1.11",
-				"getgrav/grav": "<1.7.33",
+				"getgrav/grav": "<1.7.34",
 				"getkirby/cms": "<3.5.8",
 				"getkirby/panel": "<2.5.14",
 				"gilacms/gila": "<=1.11.4",
@@ -1646,6 +2301,7 @@
 				"ibexa/core": ">=4,<4.0.7|>=4.1,<4.1.4",
 				"ibexa/post-install": "<=1.0.4",
 				"icecoder/icecoder": "<=8.1",
+				"idno/known": "<=1.3.1",
 				"illuminate/auth": ">=4,<4.0.99|>=4.1,<=4.1.31|>=4.2,<=4.2.22|>=5,<=5.0.35|>=5.1,<=5.1.46|>=5.2,<=5.2.45|>=5.3,<=5.3.31|>=5.4,<=5.4.36|>=5.5,<5.5.10",
 				"illuminate/cookie": ">=4,<=4.0.11|>=4.1,<=4.1.99999|>=4.2,<=4.2.99999|>=5,<=5.0.99999|>=5.1,<=5.1.99999|>=5.2,<=5.2.99999|>=5.3,<=5.3.99999|>=5.4,<=5.4.99999|>=5.5,<=5.5.49|>=5.6,<=5.6.99999|>=5.7,<=5.7.99999|>=5.8,<=5.8.99999|>=6,<6.18.31|>=7,<7.22.4",
 				"illuminate/database": "<6.20.26|>=7,<7.30.5|>=8,<8.40",
@@ -1653,7 +2309,9 @@
 				"illuminate/view": "<6.20.42|>=7,<7.30.6|>=8,<8.75",
 				"impresscms/impresscms": "<=1.4.3",
 				"in2code/femanager": "<5.5.1|>=6,<6.3.1",
+				"in2code/lux": "<17.6.1|>=18,<24.0.2",
 				"intelliants/subrion": "<=4.2.1",
+				"islandora/islandora": ">=2,<2.4.1",
 				"ivankristianto/phpwhois": "<=4.3",
 				"jackalope/jackalope-doctrine-dbal": "<1.7.4",
 				"james-heinrich/getid3": "<1.9.21",
@@ -1671,11 +2329,11 @@
 				"krayin/laravel-crm": "<1.2.2",
 				"kreait/firebase-php": ">=3.2,<3.8.1",
 				"la-haute-societe/tcpdf": "<6.2.22",
+				"laminas/laminas-diactoros": "<2.11.1",
 				"laminas/laminas-form": "<2.17.1|>=3,<3.0.2|>=3.1,<3.1.1",
 				"laminas/laminas-http": "<2.14.2",
 				"laravel/fortify": "<1.11.1",
 				"laravel/framework": "<6.20.42|>=7,<7.30.6|>=8,<8.75",
-				"laravel/laravel": "<=9.1.8",
 				"laravel/socialite": ">=1,<1.0.99|>=2,<2.0.10",
 				"latte/latte": "<2.10.8",
 				"lavalite/cms": "<=5.8",
@@ -1698,7 +2356,8 @@
 				"matyhtf/framework": "<3.0.6",
 				"mautic/core": "<4.3|= 2.13.1",
 				"mediawiki/core": ">=1.27,<1.27.6|>=1.29,<1.29.3|>=1.30,<1.30.2|>=1.31,<1.31.9|>=1.32,<1.32.6|>=1.32.99,<1.33.3|>=1.33.99,<1.34.3|>=1.34.99,<1.35",
-				"microweber/microweber": "<1.3",
+				"mezzio/mezzio-swoole": "<3.7|>=4,<4.3",
+				"microweber/microweber": "<1.3.1",
 				"miniorange/miniorange-saml": "<1.4.3",
 				"mittwald/typo3_forum": "<1.2.1",
 				"modx/revolution": "<= 2.8.3-pl|<2.8",
@@ -1725,7 +2384,7 @@
 				"october/cms": "= 1.1.1|= 1.0.471|= 1.0.469|>=1.0.319,<1.0.469",
 				"october/october": ">=1.0.319,<1.0.466|>=2.1,<2.1.12",
 				"october/rain": "<1.0.472|>=1.1,<1.1.2",
-				"october/system": "<1.0.475|>=1.1,<1.1.11|>=2,<2.1.27",
+				"october/system": "<1.0.476|>=1.1,<1.1.12|>=2,<2.2.15",
 				"onelogin/php-saml": "<2.10.4",
 				"oneup/uploader-bundle": "<1.9.3|>=2,<2.1.5",
 				"open-web-analytics/open-web-analytics": "<1.7.4",
@@ -1733,8 +2392,10 @@
 				"openid/php-openid": "<2.3",
 				"openmage/magento-lts": "<19.4.15|>=20,<20.0.13",
 				"orchid/platform": ">=9,<9.4.4",
+				"oro/commerce": ">=5,<5.0.4",
 				"oro/crm": ">=1.7,<1.7.4|>=3.1,<4.1.17|>=4.2,<4.2.7",
 				"oro/platform": ">=1.7,<1.7.4|>=3.1,<3.1.29|>=4.1,<4.1.17|>=4.2,<4.2.8",
+				"packbackbooks/lti-1-3-php-library": "<5",
 				"padraic/humbug_get_contents": "<1.1.2",
 				"pagarme/pagarme-php": ">=0,<3",
 				"pagekit/pagekit": "<=1.0.18",
@@ -1760,13 +2421,13 @@
 				"pimcore/data-hub": "<1.2.4",
 				"pimcore/pimcore": "<10.4.4",
 				"pocketmine/bedrock-protocol": "<8.0.2",
-				"pocketmine/pocketmine-mp": ">= 4.0.0-BETA5, < 4.4.2|<4.2.10",
+				"pocketmine/pocketmine-mp": "<4.7.2|>= 4.0.0-BETA5, < 4.4.2",
 				"pressbooks/pressbooks": "<5.18",
 				"prestashop/autoupgrade": ">=4,<4.10.1",
 				"prestashop/blockwishlist": ">=2,<2.1.1",
 				"prestashop/contactform": ">1.0.1,<4.3",
 				"prestashop/gamification": "<2.3.2",
-				"prestashop/prestashop": ">=1.7,<=1.7.8.2",
+				"prestashop/prestashop": ">=1.6.0.10,<1.7.8.7",
 				"prestashop/productcomments": ">=4,<4.2.1",
 				"prestashop/ps_emailsubscription": "<2.6.1",
 				"prestashop/ps_facetedsearch": "<3.4.1",
@@ -1793,7 +2454,7 @@
 				"shopware/core": "<=6.4.9",
 				"shopware/platform": "<=6.4.9",
 				"shopware/production": "<=6.3.5.2",
-				"shopware/shopware": "<5.7.12",
+				"shopware/shopware": "<=5.7.13",
 				"shopware/storefront": "<=6.4.8.1",
 				"shopxo/shopxo": "<2.2.6",
 				"showdoc/showdoc": "<2.10.4",
@@ -1818,7 +2479,7 @@
 				"simplito/elliptic-php": "<1.0.6",
 				"slim/slim": "<2.6",
 				"smarty/smarty": "<3.1.45|>=4,<4.1.1",
-				"snipe/snipe-it": "<5.4.4|>= 6.0.0-RC-1, <= 6.0.0-RC-5",
+				"snipe/snipe-it": "<=6.0.2|>= 6.0.0-RC-1, <= 6.0.0-RC-5",
 				"socalnick/scn-social-auth": "<1.15.2",
 				"socialiteproviders/steam": "<1.1",
 				"spipu/html2pdf": "<5.2.4",
@@ -1880,7 +2541,7 @@
 				"thinkcmf/thinkcmf": "<=5.1.7",
 				"tinymce/tinymce": "<5.10",
 				"titon/framework": ">=0,<9.9.99",
-				"topthink/framework": "<6.0.12",
+				"topthink/framework": "<=6.0.12",
 				"topthink/think": "<=6.0.9",
 				"topthink/thinkphp": "<=3.2.3",
 				"tribalsystems/zenario": "<9.2.55826",
@@ -1908,6 +2569,8 @@
 				"webcoast/deferred-image-processing": "<1.0.2",
 				"wikimedia/parsoid": "<0.12.2",
 				"willdurand/js-translation-bundle": "<2.1.1",
+				"wintercms/winter": "<1.0.475|>=1.1,<1.1.9",
+				"woocommerce/woocommerce": "<6.6",
 				"wp-cli/wp-cli": "<2.5",
 				"wp-graphql/wp-graphql": "<0.3.5",
 				"wpanel/wpanel4-cms": "<=4.3.1",
@@ -1987,7 +2650,7 @@
 					"type": "tidelift"
 				}
 			],
-			"time": "2022-06-29T23:04:12+00:00"
+			"time": "2022-08-22T17:06:07+00:00"
 		},
 		{
 			"name": "sebastian/cli-parser",
@@ -3002,70 +3665,11 @@
 				}
 			],
 			"time": "2021-07-28T10:34:58+00:00"
-		},
-		{
-			"name": "webmozart/assert",
-			"version": "1.11.0",
-			"source": {
-				"type": "git",
-				"url": "https://github.com/webmozarts/assert.git",
-				"reference": "11cb2199493b2f8a3b53e7f19068fc6aac760991"
-			},
-			"dist": {
-				"type": "zip",
-				"url": "https://api.github.com/repos/webmozarts/assert/zipball/11cb2199493b2f8a3b53e7f19068fc6aac760991",
-				"reference": "11cb2199493b2f8a3b53e7f19068fc6aac760991",
-				"shasum": ""
-			},
-			"require": {
-				"ext-ctype": "*",
-				"php": "^7.2 || ^8.0"
-			},
-			"conflict": {
-				"phpstan/phpstan": "<0.12.20",
-				"vimeo/psalm": "<4.6.1 || 4.6.2"
-			},
-			"require-dev": {
-				"phpunit/phpunit": "^8.5.13"
-			},
-			"type": "library",
-			"extra": {
-				"branch-alias": {
-					"dev-master": "1.10-dev"
-				}
-			},
-			"autoload": {
-				"psr-4": {
-					"Webmozart\\Assert\\": "src/"
-				}
-			},
-			"notification-url": "https://packagist.org/downloads/",
-			"license": [
-				"MIT"
-			],
-			"authors": [
-				{
-					"name": "Bernhard Schussek",
-					"email": "bschussek@gmail.com"
-				}
-			],
-			"description": "Assertions to validate method input/output with nice error messages.",
-			"keywords": [
-				"assert",
-				"check",
-				"validate"
-			],
-			"support": {
-				"issues": "https://github.com/webmozarts/assert/issues",
-				"source": "https://github.com/webmozarts/assert/tree/1.11.0"
-			},
-			"time": "2022-06-03T18:03:27+00:00"
 		}
 	],
 	"aliases": [],
 	"minimum-stability": "stable",
 	"stability-flags": {
-		"lsr/interfaces": 20,
 		"roave/security-advisories": 20
 	},
 	"prefer-stable": false,

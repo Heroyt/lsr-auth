@@ -1,0 +1,39 @@
+tables:
+	Lsr\Core\Auth\Models\UserType:
+		definition: "(
+			`id_user_type` int(11) unsigned NOT NULL AUTO_INCREMENT,
+			`name` varchar(100) DEFAULT NULL,
+			`super_admin` tinyint(1) NOT NULL DEFAULT '0',
+			`host` tinyint(1) NOT NULL DEFAULT '0',
+			PRIMARY KEY (`id_user_type`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
+	Lsr\Core\Auth\Models\User:
+		definition: "(
+			`id_user` int(11) unsigned NOT NULL AUTO_INCREMENT,
+			`id_user_type` int(11) unsigned NOT NULL,
+			`id_parent` int(11) unsigned DEFAULT NULL,
+			`name` varchar(20) NOT NULL DEFAULT '',
+			`email` varchar(50) NOT NULL,
+			`password` varchar(100) NOT NULL,
+			PRIMARY KEY (`id_user`),
+			KEY `id_user_type` (`id_user_type`),
+			KEY `id_parent` (`id_parent`),
+			CONSTRAINT `users_ibfk_1` FOREIGN KEY (`id_user_type`) REFERENCES `user_types` (`id_user_type`) ON UPDATE CASCADE,
+			CONSTRAINT `users_ibfk_2` FOREIGN KEY (`id_parent`) REFERENCES `users` (`id_user`) ON DELETE SET NULL ON UPDATE CASCADE
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
+	rights:
+		definition: "(
+			`right` varchar(20) NOT NULL DEFAULT '',
+			`description` text,
+			PRIMARY KEY (`right`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
+	user_type_rights:
+		definition: "(
+			`id_user_type` int(11) unsigned NOT NULL,
+			`right` varchar(20) NOT NULL DEFAULT '',
+			PRIMARY KEY (`id_user_type`,`right`),
+			KEY `right` (`right`),
+			KEY `id_user_type` (`id_user_type`),
+			CONSTRAINT `user_type_rights_ibfk_1` FOREIGN KEY (`id_user_type`) REFERENCES `user_types` (`id_user_type`) ON DELETE CASCADE ON UPDATE CASCADE,
+			CONSTRAINT `user_type_rights_ibfk_2` FOREIGN KEY (`right`) REFERENCES `rights` (`right`) ON DELETE CASCADE ON UPDATE CASCADE
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
