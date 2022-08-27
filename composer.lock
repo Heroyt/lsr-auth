@@ -4,7 +4,7 @@
 		"Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
 		"This file is @generated automatically"
 	],
-	"content-hash": "5eefd84869088a9024a95712db470db8",
+	"content-hash": "21627f126906e917f3581a86a7720e58",
 	"packages": [
 		{
 			"name": "dibi/dibi",
@@ -310,16 +310,16 @@
 		},
 		{
 			"name": "lsr/core",
-			"version": "0.1.5",
+			"version": "0.1.6",
 			"source": {
 				"type": "git",
 				"url": "https://github.com/Heroyt/lsr-core.git",
-				"reference": "389242654832cf77c4ef544215fd51669e4e53e7"
+				"reference": "e8dcdf98288d30427de1b175fa3c528e46e44bac"
 			},
 			"dist": {
 				"type": "zip",
-				"url": "https://api.github.com/repos/Heroyt/lsr-core/zipball/389242654832cf77c4ef544215fd51669e4e53e7",
-				"reference": "389242654832cf77c4ef544215fd51669e4e53e7",
+				"url": "https://api.github.com/repos/Heroyt/lsr-core/zipball/e8dcdf98288d30427de1b175fa3c528e46e44bac",
+				"reference": "e8dcdf98288d30427de1b175fa3c528e46e44bac",
 				"shasum": ""
 			},
 			"require": {
@@ -370,33 +370,38 @@
 			],
 			"description": "Laser framework core.",
 			"support": {
-				"source": "https://github.com/Heroyt/lsr-core/tree/v0.1.5",
+				"source": "https://github.com/Heroyt/lsr-core/tree/v0.1.6",
 				"issues": "https://github.com/Heroyt/lsr-core/issues"
 			},
-			"time": "2022-08-25T12:52:23+00:00"
+			"time": "2022-08-25T13:25:23+00:00"
 		},
 		{
 			"name": "lsr/helpers",
-			"version": "0.1.1",
+			"version": "0.1.2",
 			"source": {
 				"type": "git",
 				"url": "https://github.com/Heroyt/lsr-helpers.git",
-				"reference": "b733fb0e4215080018bfee42fdff6f9fa95c83d6"
+				"reference": "8e79cf07617fa40842149af233349b4448be5d5b"
 			},
 			"dist": {
 				"type": "zip",
-				"url": "https://api.github.com/repos/Heroyt/lsr-helpers/zipball/b733fb0e4215080018bfee42fdff6f9fa95c83d6",
-				"reference": "b733fb0e4215080018bfee42fdff6f9fa95c83d6",
+				"url": "https://api.github.com/repos/Heroyt/lsr-helpers/zipball/8e79cf07617fa40842149af233349b4448be5d5b",
+				"reference": "8e79cf07617fa40842149af233349b4448be5d5b",
 				"shasum": ""
 			},
 			"require": {
 				"gettext/gettext": "^5.6",
 				"lsr/interfaces": "^0.1",
+				"lsr/routing": "^0.1",
 				"nette/utils": "^3.2",
 				"php": ">=8.1",
 				"tracy/tracy": "^2.8"
 			},
 			"require-dev": {
+				"phpstan/extension-installer": "^1.1",
+				"phpstan/phpstan": "^1.8",
+				"phpstan/phpstan-dibi": "^1.0",
+				"phpstan/phpstan-nette": "^1.0",
 				"phpunit/phpunit": "^9.5",
 				"roave/security-advisories": "dev-latest"
 			},
@@ -410,6 +415,14 @@
 					"includes/functions.php"
 				]
 			},
+			"scripts": {
+				"analyze": [
+					"vendor/bin/phpstan analyze"
+				],
+				"test": [
+					"vendor/bin/phpunit"
+				]
+			},
 			"authors": [
 				{
 					"name": "Tomáš Vojík",
@@ -418,10 +431,10 @@
 			],
 			"description": "Laser framework core - Helpers.",
 			"support": {
-				"source": "https://github.com/Heroyt/lsr-helpers/tree/v0.1.1",
+				"source": "https://github.com/Heroyt/lsr-helpers/tree/v0.1.2",
 				"issues": "https://github.com/Heroyt/lsr-helpers/issues"
 			},
-			"time": "2022-07-18T06:23:24+00:00"
+			"time": "2022-08-25T15:29:28+00:00"
 		},
 		{
 			"name": "lsr/interfaces",
