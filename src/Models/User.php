@@ -67,7 +67,7 @@ class User extends Model
 		if (!$passwords->verify($password, $user->password)) {
 			return false; // Invalid password
 		}
-		self::$loggedIn = static::get($user->{static::getPrimaryKey()}, $user);
+		self::$loggedIn = static::get((int) $user->{static::getPrimaryKey()}, $user);
 		if ($passwords->needsRehash($user->password)) {
 			self::$loggedIn->password = $passwords->hash($password);
 			self::$loggedIn->save();

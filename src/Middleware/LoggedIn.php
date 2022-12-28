@@ -4,6 +4,8 @@
 namespace Lsr\Core\Auth\Middleware;
 
 
+use Lsr\Core\App;
+use Lsr\Core\Auth\Models\User;
 use Lsr\Core\Routing\Middleware;
 use Lsr\Interfaces\RequestInterface;
 
@@ -34,25 +36,24 @@ class LoggedIn implements Middleware
 	public function handle(RequestInterface $request) : bool {
 		if (!User::loggedIn()) {
 			$request->passErrors[] = 'Pro přístup na tuto stránku se musíte přihlásit!';
-			if (in_array('admin', $request->path, true)) {
+			if (in_array('admin', $request->getPath(), true)) {
 				App::redirect('admin-login', $request);
 			}
 			else {
 				App::redirect('login', $request);
 			}
-			return false;
 		}
 		if (!empty($this->rights)) {
 			$allow = true;
 			foreach ($this->rights as $right) {
-				if (!User::hasRight($right)) {
+				if (!User::getLoggedIn()?->hasRight($right)) {
 					$allow = false;
 					break;
 				}
 			}
 			if (!$allow) {
 				$request->passErrors[] = lang('You don\'t have permission to access this page.', context: 'errors');
-				if (in_array('admin', $request->path, true)) {
+				if (in_array('admin', $request->getPath(), true)) {
 					App::redirect('admin', $request);
 				}
 				else {
