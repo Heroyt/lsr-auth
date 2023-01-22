@@ -29,9 +29,9 @@ class Auth
 	) {
 	}
 
-	public static function logout() : void {
-		unset($_SESSION['usr']);
-		self::$loggedIn = null;
+	public function logout() : void {
+		$this->session->delete('usr');
+		$this->loggedIn = null;
 	}
 
 	/**
@@ -126,5 +126,16 @@ class Auth
 	 */
 	public function getLoggedIn() : ?User {
 		return $this->loggedIn;
+	}
+
+	/**
+	 * @param User $loggedIn
+	 *
+	 * @return Auth
+	 */
+	public function setLoggedIn(User $loggedIn) : static {
+		$this->loggedIn = $loggedIn;
+		$this->session->set('usr', serialize($this->loggedIn));
+		return $this;
 	}
 }
