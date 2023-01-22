@@ -12,26 +12,12 @@ use Lsr\Interfaces\RequestInterface;
 
 class LoggedIn implements Middleware
 {
-
-	/**
-	 * @var string[]
-	 */
-	public array $rights = [];
-
-	protected readonly Auth $auth;
-
 	/**
 	 * Middleware constructor.
 	 *
 	 * @param string[] $rights
 	 */
-	public function __construct(array $rights = []) {
-		$this->rights = $rights;
-		/**
-		 * @noinspection PhpFieldAssignmentTypeMismatchInspection
-		 * @phpstan-ignore-next-line
-		 */
-		$this->auth = App::getService('auth');
+	public function __construct(public readonly array $rights = []) {
 	}
 
 	/**
@@ -42,13 +28,15 @@ class LoggedIn implements Middleware
 	 * @return bool
 	 */
 	public function handle(RequestInterface $request) : bool {
-		if (!$this->auth->loggedIn()) {
-			$request->passErrors[] = 'Pro přístup na tuto stránku se musíte přihlásit!';
+		/** @var Auth $auth */
+		$auth = App::getService('auth');
+		if (!$auth->loggedIn()) {
+			$request->addPassError('Pro přístup na tuto stránku se musíte přihlásit!');
 			App::redirect('login', $request);
 		}
 		if (!empty($this->rights)) {
 			/** @var User $user */
-			$user = $this->auth->getLoggedIn();
+			$user = $auth->getLoggedIn();
 			$allow = true;
 			foreach ($this->rights as $right) {
 				if (!$user->hasRight($right)) {
@@ -57,7 +45,7 @@ class LoggedIn implements Middleware
 				}
 			}
 			if (!$allow) {
-				$request->passErrors[] = lang('You don\'t have permission to access this page.', context: 'errors');
+				$request->addPassError(lang('You don\'t have permission to access this page.', context: 'errors'));
 				App::redirect([], $request);
 			}
 		}

@@ -4,6 +4,9 @@ parameters:
 services:
 	user: Lsr\Core\Auth\Models\User
 	passwords: Nette\Security\Passwords
-	auth: Lsr\Core\Auth\Services\Auth(
-		userClass: %auth.userClass%
-	)
+	auth:
+		create: Lsr\Core\Auth\Services\Auth(
+			userClass: %auth.userClass%
+		)
+		setup:
+			- init()

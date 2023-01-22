@@ -12,16 +12,9 @@ use Lsr\Interfaces\RequestInterface;
 class LoggedOut implements Middleware
 {
 
-	protected readonly Auth $auth;
-
 	public function __construct(
 		protected readonly string $redirect = 'admin'
 	) {
-		/**
-		 * @noinspection PhpFieldAssignmentTypeMismatchInspection
-		 * @phpstan-ignore-next-line
-		 */
-		$this->auth = App::getService('auth');
 	}
 
 	/**
@@ -32,7 +25,10 @@ class LoggedOut implements Middleware
 	 * @return bool
 	 */
 	public function handle(RequestInterface $request) : bool {
-		if ($this->auth->loggedIn()) {
+		/** @var Auth $auth */
+		$auth = App::getService('auth');
+		bdump($auth, 'LoggedOutMiddleware');
+		if ($auth->loggedIn()) {
 			App::redirect($this->redirect, $request);
 		}
 		return true;

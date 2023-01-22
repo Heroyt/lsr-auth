@@ -47,10 +47,10 @@ class Auth
 		$usr = $this->session->get('usr');
 		if (isset($usr)) {
 			/** @var User|false $user */
-			$user = unserialize($usr, [User::class]);
+			$user = unserialize($usr, ['allowed_classes' => true]);
 			if ($user !== false) {
 				$user->fetch(true);
-				$this->loggedIn = $user;
+				$this->setLoggedIn($user);
 			}
 		}
 	}
