@@ -1,2 +1,9 @@
+parameters:
+	auth:
+		userClass: 'Lsr\Core\Auth\Models\User'
 services:
 	user: Lsr\Core\Auth\Models\User
+	passwords: Nette\Security\Passwords
+	auth: Lsr\Core\Auth\Services\Auth(
+		userClass: %auth.userClass%
+	)

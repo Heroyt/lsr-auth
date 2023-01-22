@@ -6,6 +6,7 @@ namespace Lsr\Core\Auth\Middleware;
 
 use Lsr\Core\App;
 use Lsr\Core\Auth\Models\User;
+use Lsr\Core\Auth\Services\Auth;
 use Lsr\Core\Routing\Middleware;
 use Lsr\Interfaces\RequestInterface;
 
@@ -17,6 +18,8 @@ class LoggedIn implements Middleware
 	 */
 	public array $rights = [];
 
+	protected readonly Auth $auth;
+
 	/**
 	 * Middleware constructor.
 	 *
@@ -24,6 +27,11 @@ class LoggedIn implements Middleware
 	 */
 	public function __construct(array $rights = []) {
 		$this->rights = $rights;
+		/**
+		 * @noinspection PhpFieldAssignmentTypeMismatchInspection
+		 * @phpstan-ignore-next-line
+		 */
+		$this->auth = App::getService('auth');
 	}
 
 	/**
@@ -34,31 +42,23 @@ class LoggedIn implements Middleware
 	 * @return bool
 	 */
 	public function handle(RequestInterface $request) : bool {
-		if (!User::loggedIn()) {
+		if (!$this->auth->loggedIn()) {
 			$request->passErrors[] = 'Pro přístup na tuto stránku se musíte přihlásit!';
-			if (in_array('admin', $request->getPath(), true)) {
-				App::redirect('admin-login', $request);
-			}
-			else {
-				App::redirect('login', $request);
-			}
+			App::redirect('login', $request);
 		}
 		if (!empty($this->rights)) {
+			/** @var User $user */
+			$user = $this->auth->getLoggedIn();
 			$allow = true;
 			foreach ($this->rights as $right) {
-				if (!User::getLoggedIn()?->hasRight($right)) {
+				if (!$user->hasRight($right)) {
 					$allow = false;
 					break;
 				}
 			}
 			if (!$allow) {
 				$request->passErrors[] = lang('You don\'t have permission to access this page.', context: 'errors');
-				if (in_array('admin', $request->getPath(), true)) {
-					App::redirect('admin', $request);
-				}
-				else {
-					App::redirect([], $request);
-				}
+				App::redirect([], $request);
 			}
 		}
 		return true;
