@@ -2,6 +2,7 @@
 
 namespace Lsr\Core\Auth\Services;
 
+use Dibi\Row;
 use Lsr\Core\Auth\Exceptions\DuplicateEmailException;
 use Lsr\Core\Auth\Models\User;
 use Lsr\Core\Auth\Models\UserType;
@@ -12,15 +13,19 @@ use Lsr\Interfaces\SessionInterface;
 use Lsr\Logging\Exceptions\DirectoryCreationException;
 use Nette\Security\Passwords;
 
+/**
+ * @template T of User
+ */
 class Auth
 {
 
+	/** @var T|null */
 	protected ?User $loggedIn = null;
 
 	/**
-	 * @param SessionInterface   $session
-	 * @param Passwords          $passwords
-	 * @param class-string<User> $userClass
+	 * @param SessionInterface $session
+	 * @param Passwords        $passwords
+	 * @param class-string<T>  $userClass
 	 */
 	public function __construct(
 		private readonly SessionInterface $session,
@@ -46,7 +51,7 @@ class Auth
 		/** @var string|null $usr */
 		$usr = $this->session->get('usr');
 		if (isset($usr)) {
-			/** @var User|false $user */
+			/** @var T|false $user */
 			$user = unserialize($usr, ['allowed_classes' => true]);
 			if ($user !== false) {
 				$user->fetch(true);
@@ -60,13 +65,13 @@ class Auth
 	 *
 	 * @param string $email
 	 * @param string $password
+	 * @param bool   $remember If true, set the SESSION lifespan to 30 days
 	 *
 	 * @return bool If the login was successful
-	 * @throws DirectoryCreationException
-	 * @throws ModelNotFoundException
 	 * @throws ValidationException
 	 */
-	public function login(string $email, string $password) : bool {
+	public function login(string $email, string $password, bool $remember = false) : bool {
+		/** @var null|Row{password:string,name:string,email:string} $user */
 		$user = DB::select(($this->userClass)::TABLE, '*')->where('[email] = %s', $email)->fetch();
 		if (!isset($user)) {
 			return false; // User does not exist
@@ -81,6 +86,9 @@ class Auth
 			$this->loggedIn->save();
 		}
 		$this->session->set('usr', serialize($this->loggedIn));
+		if ($remember) {
+			$this->session->setParams(time() + (3600 * 24 * 30)); // 3600 seconds in an hour * 24 hours in a day * 30 days
+		}
 		return true;
 	}
 
@@ -91,7 +99,7 @@ class Auth
 	 * @param string $password
 	 * @param string $name
 	 *
-	 * @return User|null
+	 * @return T|null
 	 * @throws DuplicateEmailException
 	 */
 	public function register(string $email, string $password, string $name = '') : ?User {
@@ -104,13 +112,15 @@ class Auth
 		$user->name = $name;
 		$user->email = $email;
 		$user->password = $this->passwords->hash($password);
-		$user->type = UserType::getHostUserType();
-		$user->id_user_type = isset($user->type) ? $user->type->id : 1;
+		$user->type = UserType::getHostUserType() ?? (new UserType());
+		if (property_exists($user, 'id_user_type')) {
+			$user->id_user_type = $user->type->id ?? 1;
+		}
 		try {
 			if ($user->insert()) {
 				return $user;
 			}
-		} catch (ValidationException $e) {
+		} catch (ValidationException) {
 			// TODO: Handle validation error
 		}
 
@@ -122,16 +132,16 @@ class Auth
 	}
 
 	/**
-	 * @return User|null
+	 * @return T|null
 	 */
 	public function getLoggedIn() : ?User {
 		return $this->loggedIn;
 	}
 
 	/**
-	 * @param User $loggedIn
+	 * @param T $loggedIn
 	 *
-	 * @return Auth
+	 * @return static
 	 */
 	public function setLoggedIn(User $loggedIn) : static {
 		$this->loggedIn = $loggedIn;
