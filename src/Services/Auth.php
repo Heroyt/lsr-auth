@@ -9,14 +9,16 @@ use Lsr\Core\Auth\Models\UserType;
 use Lsr\Core\DB;
 use Lsr\Core\Exceptions\ModelNotFoundException;
 use Lsr\Core\Exceptions\ValidationException;
+use Lsr\Interfaces\AuthInterface;
 use Lsr\Interfaces\SessionInterface;
 use Lsr\Logging\Exceptions\DirectoryCreationException;
 use Nette\Security\Passwords;
 
 /**
  * @template T of User
+ * @implements AuthInterface<T>
  */
-class Auth
+class Auth implements AuthInterface
 {
 
 	/** @var T|null */
@@ -147,5 +149,31 @@ class Auth
 		$this->loggedIn = $loggedIn;
 		$this->session->set('usr', serialize($this->loggedIn));
 		return $this;
+	}
+
+	/**
+	 * Check if user is currently logged in and has specified right
+	 *
+	 * @param string $right
+	 *
+	 * @return bool
+	 */
+	public function hasRight(string $right) : bool {
+		if (!isset($this->loggedIn)) {
+			return false;
+		}
+		return $this->loggedIn->hasRight($right);
+	}
+
+	/**
+	 * Get all current user's rights
+	 *
+	 * @return string[]
+	 */
+	public function getRights() : array {
+		if (!isset($this->loggedIn)) {
+			return [];
+		}
+		return $this->loggedIn->getRights();
 	}
 }
