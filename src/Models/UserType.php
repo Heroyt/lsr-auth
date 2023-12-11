@@ -14,6 +14,8 @@ class UserType extends Model
 
 	public string $name = '';
 
+	public bool $superAdmin = false;
+
 	/** @var string[] */
 	protected array $rights = [];
 	/** @var array<string,bool> */
@@ -36,6 +38,9 @@ class UserType extends Model
 	}
 
 	public function hasRight(string $right) : bool {
+		if ($this->superAdmin) {
+			return true;
+		}
 		if (isset($this->hasRights[$right])) {
 			return $this->hasRights[$right];
 		}
