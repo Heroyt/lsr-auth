@@ -1,6 +1,6 @@
 {
 	"name": "lsr/auth",
-	"version": "0.2.7",
+	"version": "0.2.8",
 	"description": "Laser framework core - Authentication.",
 	"repositories": [
 		{
@@ -10,7 +10,7 @@
 	],
 	"require-dev": {
 		"roave/security-advisories": "dev-latest",
-		"phpunit/phpunit": "^10"
+		"phpunit/phpunit": "^11"
 	},
 	"autoload": {
 		"psr-4": {

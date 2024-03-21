@@ -8,12 +8,15 @@ use Lsr\Core\App;
 use Lsr\Core\Auth\Services\Auth;
 use Lsr\Core\Routing\Middleware;
 use Lsr\Interfaces\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-class LoggedOut implements Middleware
+readonly class LoggedOut implements Middleware
 {
 
 	public function __construct(
-		protected readonly string $redirect = 'admin'
+		protected string $redirect = 'admin'
 	) {
 	}
 
@@ -24,14 +27,14 @@ class LoggedOut implements Middleware
 	 *
 	 * @return bool
 	 */
-	public function handle(RequestInterface $request) : bool {
+	public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface {
 		/** @var Auth $auth */
 		$auth = App::getService('auth');
 		bdump($auth, 'LoggedOutMiddleware');
 		if ($auth->loggedIn()) {
-			App::redirect($this->redirect, $request);
+			return App::redirect($this->redirect, $request);
 		}
-		return true;
+		return $handler->handle($request);
 	}
 
 }
