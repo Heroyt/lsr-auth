@@ -35,7 +35,7 @@ readonly class LoggedIn implements Middleware
 		$auth = App::getService('auth');
 		if (!$auth->loggedIn()) {
 			$request->addPassError('Pro přístup na tuto stránku se musíte přihlásit!');
-			return App::redirect('login', $request);
+			return App::getInstance()->redirect('login', $request);
 		}
 		if (!empty($this->rights)) {
 			/** @var User $user */
@@ -43,7 +43,7 @@ readonly class LoggedIn implements Middleware
 			foreach ($this->rights as $right) {
 				if (!$user->hasRight($right)) {
 					$request->addPassError(lang('You don\'t have permission to access this page.', context: 'errors'));
-					return App::redirect([], $request);
+					return App::getInstance()->redirect([], $request);
 				}
 			}
 		}

@@ -32,7 +32,7 @@ readonly class LoggedOut implements Middleware
 		$auth = App::getService('auth');
 		bdump($auth, 'LoggedOutMiddleware');
 		if ($auth->loggedIn()) {
-			return App::redirect($this->redirect, $request);
+			return App::getInstance()->redirect($this->redirect, $request);
 		}
 		return $handler->handle($request);
 	}
