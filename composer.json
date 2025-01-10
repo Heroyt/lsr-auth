@@ -1,6 +1,6 @@
 {
 	"name": "lsr/auth",
-	"version": "0.2.9",
+	"version": "0.3.0",
 	"description": "Laser framework core - Authentication.",
 	"repositories": [
 		{
@@ -10,7 +10,8 @@
 	],
 	"require-dev": {
 		"roave/security-advisories": "dev-latest",
-		"phpunit/phpunit": "^11"
+		"phpunit/phpunit": "^11",
+		"phpstan/phpstan": "^2"
 	},
 	"autoload": {
 		"psr-4": {
@@ -24,9 +25,11 @@
 		}
 	],
 	"require": {
-		"lsr/interfaces": "^0.2",
-		"nette/di": "^3.1",
-		"nette/security": "^3.1",
-		"lsr/core": "^0.2"
+		"php": ">=8.4",
+		"lsr/interfaces": "^0.3.4",
+		"nette/di": "^3.2",
+		"nette/security": "^3.2",
+		"lsr/orm": "^0.3.7",
+		"lsr/routing": "^0.3.1"
 	}
 }

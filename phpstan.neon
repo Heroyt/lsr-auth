@@ -7,7 +7,6 @@ parameters:
 	level: max
 	paths:
 		- src
-		- tests
 	tmpDir: temp
 	universalObjectCratesClasses:
 		- Dibi\Row

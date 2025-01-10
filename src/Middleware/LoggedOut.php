@@ -4,10 +4,10 @@
 namespace Lsr\Core\Auth\Middleware;
 
 
-use Lsr\Core\App;
+use Lsr\Core\Auth\Models\User;
 use Lsr\Core\Auth\Services\Auth;
 use Lsr\Core\Routing\Middleware;
-use Lsr\Interfaces\RequestInterface;
+use Lsr\Exceptions\RedirectException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -15,24 +15,27 @@ use Psr\Http\Server\RequestHandlerInterface;
 readonly class LoggedOut implements Middleware
 {
 
+    /**
+     * @template T of User
+     * @param  Auth<T>  $auth
+     * @param  non-empty-string|array<string|int,string>  $redirect
+     */
 	public function __construct(
-		protected string $redirect = 'admin'
+        private Auth             $auth,
+        protected string | array $redirect = 'admin',
 	) {
 	}
 
-	/**
-	 * Handles a request - checks if the user is logged out
-	 *
-	 * @param RequestInterface $request
-	 *
-	 * @return bool
-	 */
+    /**
+     * Handles a request - checks if the user is logged out
+     *
+     * @param  ServerRequestInterface  $request
+     * @param  RequestHandlerInterface  $handler
+     * @return ResponseInterface
+     */
 	public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface {
-		/** @var Auth $auth */
-		$auth = App::getService('auth');
-		bdump($auth, 'LoggedOutMiddleware');
-		if ($auth->loggedIn()) {
-			return App::getInstance()->redirect($this->redirect, $request);
+        if ($this->auth->loggedIn()) {
+            throw new RedirectException($this->redirect);
 		}
 		return $handler->handle($request);
 	}
