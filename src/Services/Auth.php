@@ -36,6 +36,10 @@ class Auth implements AuthInterface
         private readonly string           $userClass = User::class,
     ) {}
 
+    public function __wakeup() : void {
+        $this->init();
+    }
+
     public function logout() : void {
         $this->session->delete('usr');
         $this->loggedIn = null;
