@@ -11,6 +11,7 @@ use Lsr\Core\Routing\Middleware;
 use Lsr\Exceptions\RedirectException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\UriInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 readonly class LoggedIn implements Middleware
@@ -20,13 +21,17 @@ readonly class LoggedIn implements Middleware
      *
      * @template T of User
      * @param  Auth<T>  $auth
-     * @param  string[]  $rights
+     * @param  non-empty-string[]  $rights
+     * @param  non-empty-string|array<int|string, string>  $unauthorizedUri
+     * @param  non-empty-string|array<int|string, string>  $forbiddenUri
      */
     public function __construct(
-        private Auth  $auth,
-        public array  $rights = [],
-        public string $unauthorizedMessage = 'Pro přístup na tuto stránku se musíte přihlásit!',
-        public string $forbiddenMessage = 'Na tuto stránku nemáte přístup',
+        private Auth                         $auth,
+        public array                         $rights = [],
+        public string                        $unauthorizedMessage = 'Pro přístup na tuto stránku se musíte přihlásit!',
+        public string                        $forbiddenMessage = 'Na tuto stránku nemáte přístup',
+        public array | string | UriInterface $unauthorizedUri = 'login',
+        public array | string | UriInterface $forbiddenUri = [],
     ) {}
 
     /**
@@ -41,7 +46,11 @@ readonly class LoggedIn implements Middleware
         if (!$this->auth->loggedIn()) {
             assert($request instanceof Request);
             $request->addPassError($this->unauthorizedMessage);
-            throw new RedirectException('login', request: $request);
+            throw new RedirectException(
+                         $this->unauthorizedUri instanceof UriInterface ?
+                             (string) $this->unauthorizedUri : $this->unauthorizedUri,
+                request: $request,
+            );
         }
         if (!empty($this->rights)) {
             /** @var User $user */
@@ -50,7 +59,11 @@ readonly class LoggedIn implements Middleware
                 if (!$user->hasRight($right)) {
                     assert($request instanceof Request);
                     $request->addPassError($this->forbiddenMessage);
-                    throw new RedirectException(request: $request);
+                    throw new RedirectException(
+                                 $this->forbiddenUri instanceof UriInterface ?
+                                     (string) $this->forbiddenUri : $this->forbiddenUri,
+                        request: $request,
+                    );
                 }
             }
         }

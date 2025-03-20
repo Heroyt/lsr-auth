@@ -17,7 +17,7 @@ class UserType extends Model
 
     public bool $superAdmin = false;
 
-    /** @var string[] */
+    /** @var non-empty-string[] */
     protected array $rights = [];
     /** @var array<string,bool> */
     protected array $hasRights = [];
@@ -27,11 +27,11 @@ class UserType extends Model
     }
 
     /**
-     * @return string[]
+     * @return non-empty-string[]
      */
     public function getRights() : array {
         if (!isset($this->rights)) {
-            /** @var string[] $rights */
+            /** @var non-empty-string[] $rights */
             $rights = DB::select($this::TYPE_RIGHTS_TABLE, 'right')
                         ->where('%n = %i', $this::getPrimaryKey(), $this->id)
                         ->fetchPairs();
