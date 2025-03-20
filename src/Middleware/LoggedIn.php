@@ -21,12 +21,13 @@ readonly class LoggedIn implements Middleware
      *
      * @template T of User
      * @param  Auth<T>  $auth
-     * @param  non-empty-string[]  $rights
+     * @param  list<non-empty-string|non-empty-string[]>  $rights  List of rights. The first level is AND, the second
+     *     level (nested list) is OR.
      * @param  non-empty-string|array<int|string, string>  $unauthorizedUri
      * @param  non-empty-string|array<int|string, string>  $forbiddenUri
      */
     public function __construct(
-        private Auth                         $auth,
+        protected Auth $auth,
         public array                         $rights = [],
         public string                        $unauthorizedMessage = 'Pro přístup na tuto stránku se musíte přihlásit!',
         public string                        $forbiddenMessage = 'Na tuto stránku nemáte přístup',
@@ -43,32 +44,56 @@ readonly class LoggedIn implements Middleware
      * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface {
+        assert($request instanceof Request);
         if (!$this->auth->loggedIn()) {
-            assert($request instanceof Request);
-            $request->addPassError($this->unauthorizedMessage);
-            throw new RedirectException(
-                         $this->unauthorizedUri instanceof UriInterface ?
-                             (string) $this->unauthorizedUri : $this->unauthorizedUri,
-                request: $request,
-            );
+            $this->unauthorized($request);
         }
         if (!empty($this->rights)) {
             /** @var User $user */
             $user = $this->auth->getLoggedIn();
+            // First level is AND, second level is OR
             foreach ($this->rights as $right) {
-                if (!$user->hasRight($right)) {
-                    assert($request instanceof Request);
-                    $request->addPassError($this->forbiddenMessage);
-                    throw new RedirectException(
-                                 $this->forbiddenUri instanceof UriInterface ?
-                                     (string) $this->forbiddenUri : $this->forbiddenUri,
-                        request: $request,
-                    );
+                if (is_string($right)) {
+                    if (!$user->hasRight($right)) {
+                        $this->forbid($request);
+                    }
+                }
+                else if (is_array($right)) {
+                    $hasRight = false;
+                    foreach ($right as $subRight) {
+                        if ($user->hasRight($subRight)) {
+                            $hasRight = true;
+                            break;
+                        }
+                    }
+                    if (!$hasRight) {
+                        $this->forbid($request);
+                    }
                 }
             }
         }
 
         return $handler->handle($request);
+    }
+
+    protected function unauthorized(Request $request) : never {
+        $request->addPassError($this->unauthorizedMessage);
+        throw new RedirectException(
+        // @phpstan-ignore argument.type
+                     $this->unauthorizedUri instanceof UriInterface ?
+                         (string) $this->unauthorizedUri : $this->unauthorizedUri,
+            request: $request,
+        );
+    }
+
+    protected function forbid(Request $request) : never {
+        $request->addPassError($this->forbiddenMessage);
+        throw new RedirectException(
+        // @phpstan-ignore argument.type
+                     $this->forbiddenUri instanceof UriInterface ?
+                         (string) $this->forbiddenUri : $this->forbiddenUri,
+            request: $request,
+        );
     }
 
 }
