@@ -45,6 +45,7 @@ readonly class LoggedIn implements Middleware
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface {
         assert($request instanceof Request);
+        $this->auth->init();
         if (!$this->auth->loggedIn()) {
             $this->unauthorized($request);
         }

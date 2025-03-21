@@ -54,6 +54,7 @@ class Auth implements AuthInterface
      * @throws DirectoryCreationException
      */
     public function init() : void {
+        $this->loggedIn = null;
         /** @var string|null $usr */
         $usr = $this->session->get('usr');
         if (isset($usr)) {
