@@ -2,9 +2,9 @@
 
 namespace Lsr\Core\Auth\Models;
 
-use Lsr\Core\Models\Attributes\NoDB;
 use Lsr\Db\DB;
 use Lsr\ObjectValidation\Attributes\Email;
+use Lsr\Orm\Attributes\NoDB;
 use Lsr\Orm\Attributes\PrimaryKey;
 use Lsr\Orm\Attributes\Relations\ManyToOne;
 use Lsr\Orm\Model;
@@ -43,9 +43,10 @@ class User extends Model
     protected array $hasRights = [];
 
     /**
-     * @return array{id: int}
+     * @return array{id: int,email:string}
      */
     public function __serialize() : array {
+        assert($this->id !== null);
         return [
             'id'    => $this->id,
             'email' => $this->email,

@@ -162,9 +162,9 @@ class Auth implements AuthInterface
     }
 
     /**
-     * Check if user is currently logged in and has specified right
+     * Check if user is currently logged in and has specified right.
      *
-     * @param  string  $right
+     * @param  non-empty-string  $right
      *
      * @return bool
      */

@@ -8,31 +8,33 @@ use Lsr\Core\Auth\Models\User;
 use Lsr\Core\Auth\Services\Auth;
 use Lsr\Core\Requests\Request;
 use Lsr\Core\Routing\Middleware;
-use Lsr\Exceptions\RedirectException;
+use Lsr\Exceptions\DispatchBreakException;
+use Lsr\Interfaces\SessionInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
+/**
+ * @template T of User
+ */
 readonly class LoggedIn implements Middleware
 {
     /**
      * Middleware constructor.
      *
-     * @template T of User
      * @param  Auth<T>  $auth
      * @param  list<non-empty-string|non-empty-string[]>  $rights  List of rights. The first level is AND, the second
      *     level (nested list) is OR.
-     * @param  non-empty-string|array<int|string, string>  $unauthorizedUri
-     * @param  non-empty-string|array<int|string, string>  $forbiddenUri
      */
     public function __construct(
-        protected Auth $auth,
-        public array                         $rights = [],
-        public string                        $unauthorizedMessage = 'Pro přístup na tuto stránku se musíte přihlásit!',
-        public string                        $forbiddenMessage = 'Na tuto stránku nemáte přístup',
-        public array | string | UriInterface $unauthorizedUri = 'login',
-        public array | string | UriInterface $forbiddenUri = [],
+        protected Auth               $auth,
+        public array                 $rights = [],
+        public string                $unauthorizedMessage = 'Pro přístup na tuto stránku se musíte přihlásit!',
+        public string                $forbiddenMessage = 'Na tuto stránku nemáte přístup',
+        public string | UriInterface $unauthorizedUri = 'login',
+        public string | UriInterface $forbiddenUri = '/',
+        protected ?SessionInterface  $session = null,
     ) {}
 
     /**
@@ -58,18 +60,18 @@ readonly class LoggedIn implements Middleware
                     if (!$user->hasRight($right)) {
                         $this->forbid($request);
                     }
+                    continue;
                 }
-                else if (is_array($right)) {
-                    $hasRight = false;
-                    foreach ($right as $subRight) {
-                        if ($user->hasRight($subRight)) {
-                            $hasRight = true;
-                            break;
-                        }
+
+                $hasRight = false;
+                foreach ($right as $subRight) {
+                    if ($user->hasRight($subRight)) {
+                        $hasRight = true;
+                        break;
                     }
-                    if (!$hasRight) {
-                        $this->forbid($request);
-                    }
+                }
+                if (!$hasRight) {
+                    $this->forbid($request);
                 }
             }
         }
@@ -78,23 +80,15 @@ readonly class LoggedIn implements Middleware
     }
 
     protected function unauthorized(Request $request) : never {
-        $request->addPassError($this->unauthorizedMessage);
-        throw new RedirectException(
-        // @phpstan-ignore argument.type
-                     $this->unauthorizedUri instanceof UriInterface ?
-                         (string) $this->unauthorizedUri : $this->unauthorizedUri,
-            request: $request,
-        );
+        $this->session?->flashError($this->unauthorizedMessage);
+        $this->session?->flash('fromRequest', serialize($request));
+        throw DispatchBreakException::createRedirect($this->unauthorizedUri);
     }
 
     protected function forbid(Request $request) : never {
-        $request->addPassError($this->forbiddenMessage);
-        throw new RedirectException(
-        // @phpstan-ignore argument.type
-                     $this->forbiddenUri instanceof UriInterface ?
-                         (string) $this->forbiddenUri : $this->forbiddenUri,
-            request: $request,
-        );
+        $this->session?->flashError($this->forbiddenMessage);
+        $this->session?->flash('fromRequest', serialize($request));
+        throw DispatchBreakException::createRedirect($this->forbiddenUri);
     }
 
 }

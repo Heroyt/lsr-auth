@@ -7,22 +7,27 @@ namespace Lsr\Core\Auth\Middleware;
 use Lsr\Core\Auth\Models\User;
 use Lsr\Core\Auth\Services\Auth;
 use Lsr\Core\Routing\Middleware;
-use Lsr\Exceptions\RedirectException;
+use Lsr\Exceptions\DispatchBreakException;
+use Lsr\Interfaces\SessionInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\UriInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
+/**
+ * @template T of User
+ */
 readonly class LoggedOut implements Middleware
 {
 
     /**
-     * @template T of User
      * @param  Auth<T>  $auth
-     * @param  non-empty-string|array<string|int,string>  $redirect
      */
     public function __construct(
-        private Auth             $auth,
-        protected string | array $redirect = 'admin',
+        protected Auth                  $auth,
+        public string                   $message = 'Již jste přihlášen.',
+        protected string | UriInterface $redirect = '/',
+        protected ?SessionInterface     $session = null,
     ) {}
 
     /**
@@ -35,7 +40,9 @@ readonly class LoggedOut implements Middleware
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface {
         $this->auth->init();
         if ($this->auth->loggedIn() && $this->auth->getLoggedIn() !== null) {
-            throw new RedirectException($this->redirect);
+            $this->session?->flashWarning($this->message);
+            $this->session?->flash('fromRequest', serialize($request));
+            throw DispatchBreakException::createRedirect($this->redirect);
         }
         return $handler->handle($request);
     }
