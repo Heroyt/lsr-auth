@@ -5,6 +5,8 @@ parameters:
 		- DEFAULT_LANGUAGE
 	editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
 	level: max
+	scanDirectories:
+		- ../lsr-core
 	paths:
 		- src
 	tmpDir: temp

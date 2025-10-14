@@ -2,6 +2,7 @@
 
 namespace Lsr\Core\Auth\Services;
 
+use Lsr\Core\App;
 use Lsr\Core\Auth\Dto\UserRow;
 use Lsr\Core\Auth\Exceptions\DuplicateEmailException;
 use Lsr\Core\Auth\Models\User;
@@ -26,23 +27,27 @@ class Auth implements AuthInterface
     protected ?User $loggedIn = null;
 
     /**
-     * @param  SessionInterface  $session
-     * @param  Passwords  $passwords
-     * @param  class-string<T>  $userClass
+     * @param SessionInterface $session
+     * @param Passwords $passwords
+     * @param class-string<T> $userClass
      */
     public function __construct(
-        private readonly SessionInterface $session,
-        private readonly Passwords        $passwords,
-        private readonly string           $userClass = User::class,
-    ) {}
-
-    public function __wakeup() : void {
-        $this->init();
+        private SessionInterface $session,
+        private Passwords        $passwords,
+        private readonly string  $userClass = User::class,
+    )
+    {
     }
 
-    public function logout() : void {
-        $this->session->delete('usr');
-        $this->loggedIn = null;
+    public function __wakeup(): void
+    {
+        $session = App::getServiceByType(SessionInterface::class);
+        assert($session !== null);
+        $this->session = $session;
+        $passwords = App::getServiceByType(Passwords::class);
+        assert($passwords !== null);
+        $this->passwords = $passwords;
+        $this->init();
     }
 
     /**
@@ -53,7 +58,8 @@ class Auth implements AuthInterface
      * @throws ValidationException
      * @throws DirectoryCreationException
      */
-    public function init() : void {
+    public function init(): void
+    {
         $this->loggedIn = null;
         /** @var string|null $usr */
         $usr = $this->session->get('usr');
@@ -67,20 +73,29 @@ class Auth implements AuthInterface
         }
     }
 
+    public function logout(): void
+    {
+        $this->session->delete('usr');
+        $this->loggedIn = null;
+    }
+
     /**
      * Try to log in a user
      *
-     * @param  string  $email
-     * @param  string  $password
-     * @param  bool  $remember  If true, set the SESSION lifespan to 30 days
+     * @param string $email
+     * @param string $password
+     * @param bool $remember If true, set the SESSION lifespan to 30 days
      *
      * @return bool If the login was successful
      * @throws ValidationException
      */
-    public function login(string $email, #[SensitiveParameter] string $password, bool $remember = false) : bool {
+    public function login(string $email, #[SensitiveParameter] string $password, bool $remember = false): bool
+    {
         $user = DB::select(($this->userClass)::TABLE, 'id_user, email, password')
-                  ->where('[email] = %s', $email)
-                  ->fetchDto(UserRow::class);
+            ->where('[email] = %s', $email)
+            ->cacheExpire('5 minutes') // Cache for a short time
+            ->cacheTags($this->userClass::TABLE, 'users/login')
+            ->fetchDto(UserRow::class);
         if (!isset($user)) {
             return false; // User does not exist
         }
@@ -105,17 +120,20 @@ class Auth implements AuthInterface
     /**
      * Register a new user
      *
-     * @param  string  $email
-     * @param  string  $password
-     * @param  string  $name
+     * @param string $email
+     * @param string $password
+     * @param string $name
      *
      * @return T|null
      * @throws DuplicateEmailException
      */
-    public function register(string $email, string $password, string $name = '') : ?User {
+    public function register(string $email, string $password, string $name = ''): ?User
+    {
         $check = DB::select(($this->userClass)::TABLE, 'COUNT(*)')
-                   ->where('[email] = %s', $email)
-                   ->fetchSingle();
+            ->where('[email] = %s', $email)
+            ->cacheExpire('5 minutes') // Cache for a short time
+            ->cacheTags($this->userClass::TABLE, 'users/login')
+            ->fetchSingle();
         if ($check > 0) {
             throw new DuplicateEmailException('User with this email already exists');
         }
@@ -139,23 +157,26 @@ class Auth implements AuthInterface
         return null;
     }
 
-    public function loggedIn() : bool {
+    public function loggedIn(): bool
+    {
         return isset($this->loggedIn);
     }
 
     /**
      * @return T|null
      */
-    public function getLoggedIn() : ?User {
+    public function getLoggedIn(): ?User
+    {
         return $this->loggedIn;
     }
 
     /**
-     * @param  T  $loggedIn
+     * @param T $loggedIn
      *
      * @return static
      */
-    public function setLoggedIn(User $loggedIn) : static {
+    public function setLoggedIn(User $loggedIn): static
+    {
         $this->loggedIn = $loggedIn;
         $this->session->set('usr', serialize($this->loggedIn));
         return $this;
@@ -164,11 +185,12 @@ class Auth implements AuthInterface
     /**
      * Check if user is currently logged in and has specified right.
      *
-     * @param  non-empty-string  $right
+     * @param non-empty-string $right
      *
      * @return bool
      */
-    public function hasRight(string $right) : bool {
+    public function hasRight(string $right): bool
+    {
         if (!isset($this->loggedIn)) {
             return false;
         }
@@ -180,7 +202,8 @@ class Auth implements AuthInterface
      *
      * @return string[]
      */
-    public function getRights() : array {
+    public function getRights(): array
+    {
         if (!isset($this->loggedIn)) {
             return [];
         }
