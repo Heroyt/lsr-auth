@@ -16,6 +16,7 @@ class UserType extends Model
     public string $name = '';
 
     public bool $superAdmin = false;
+    public bool $host = false;
 
     /** @var non-empty-string[] */
     protected array $rights = [];
