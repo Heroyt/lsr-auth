@@ -3,6 +3,8 @@
 namespace Lsr\Core\Auth\Services;
 
 use Lsr\Core\App;
+use Lsr\Core\Auth\Lifecycle\AuthLifecycleEvent;
+use Lsr\Core\Auth\Lifecycle\AuthLifecycleHookInterface;
 use Lsr\Core\Auth\Dto\UserRow;
 use Lsr\Core\Auth\Exceptions\DuplicateEmailException;
 use Lsr\Core\Auth\Models\User;
@@ -15,6 +17,8 @@ use Lsr\Orm\Exceptions\ModelNotFoundException;
 use Lsr\Orm\Exceptions\ValidationException;
 use Nette\Security\Passwords;
 use SensitiveParameter;
+use Throwable;
+use WeakMap;
 
 /**
  * @template T of User
@@ -22,9 +26,10 @@ use SensitiveParameter;
  */
 class Auth implements AuthInterface
 {
-
     /** @var T|null */
     protected ?User $loggedIn = null;
+    /** @var WeakMap<object, AuthLifecycleHookInterface>|null */
+    private static ?WeakMap $lifecycleHooks = null;
 
     /**
      * @param SessionInterface $session
@@ -33,10 +38,16 @@ class Auth implements AuthInterface
      */
     public function __construct(
         private SessionInterface $session,
-        private Passwords        $passwords,
-        private readonly string  $userClass = User::class,
-    )
+        private Passwords $passwords,
+        private readonly string $userClass = User::class,
+    ) {
+    }
+
+    public function setLifecycleHook(AuthLifecycleHookInterface $hook): static
     {
+        self::$lifecycleHooks ??= new WeakMap();
+        self::$lifecycleHooks[$this] = $hook;
+        return $this;
     }
 
     public function __wakeup(): void
@@ -75,8 +86,20 @@ class Auth implements AuthInterface
 
     public function logout(): void
     {
-        $this->session->delete('usr');
-        $this->loggedIn = null;
+        $startedAt = hrtime(true);
+        $outcome = AuthLifecycleEvent::SUCCESS;
+        $errorType = null;
+
+        try {
+            $this->session->delete('usr');
+            $this->loggedIn = null;
+        } catch (Throwable $exception) {
+            $outcome = AuthLifecycleEvent::ERROR;
+            $errorType = $exception::class;
+            throw $exception;
+        } finally {
+            $this->recordLifecycle(AuthLifecycleEvent::LOGOUT, $outcome, $startedAt, $errorType);
+        }
     }
 
     /**
@@ -91,30 +114,44 @@ class Auth implements AuthInterface
      */
     public function login(string $email, #[SensitiveParameter] string $password, bool $remember = false): bool
     {
-        $user = DB::select(($this->userClass)::TABLE, 'id_user, email, password')
-            ->where('[email] = %s', $email)
-            ->cacheExpire('5 minutes') // Cache for a short time
-            ->cacheTags($this->userClass::TABLE, 'users/login')
-            ->fetchDto(UserRow::class);
-        if (!isset($user)) {
-            return false; // User does not exist
-        }
-        if (!$this->passwords->verify($password, $user->password)) {
-            return false; // Invalid password
-        }
-        $this->loggedIn = ($this->userClass)::get($user->id_user);
+        $startedAt = hrtime(true);
+        $outcome = AuthLifecycleEvent::ERROR;
+        $errorType = null;
 
-        if ($this->passwords->needsRehash($user->password)) {
-            $this->loggedIn->password = $this->passwords->hash($password);
-            $this->loggedIn->save();
+        try {
+            $user = DB::select(($this->userClass)::TABLE, 'id_user, email, password')
+                ->where('[email] = %s', $email)
+                ->cacheExpire('5 minutes') // Cache for a short time
+                ->cacheTags($this->userClass::TABLE, 'users/login')
+                ->fetchDto(UserRow::class);
+            if (!isset($user)) {
+                $outcome = AuthLifecycleEvent::INVALID_CREDENTIALS;
+                return false; // User does not exist
+            }
+            if (!$this->passwords->verify($password, $user->password)) {
+                $outcome = AuthLifecycleEvent::INVALID_CREDENTIALS;
+                return false; // Invalid password
+            }
+            $this->loggedIn = ($this->userClass)::get($user->id_user);
+
+            if ($this->passwords->needsRehash($user->password)) {
+                $this->loggedIn->password = $this->passwords->hash($password);
+                $this->loggedIn->save();
+            }
+            $this->session->set('usr', serialize($this->loggedIn));
+            if ($remember) {
+                $this->session->setParams(
+                    time() + (3600 * 24 * 30)
+                ); // 3600 seconds in an hour * 24 hours in a day * 30 days
+            }
+            $outcome = AuthLifecycleEvent::SUCCESS;
+            return true;
+        } catch (Throwable $exception) {
+            $errorType = $exception::class;
+            throw $exception;
+        } finally {
+            $this->recordLifecycle(AuthLifecycleEvent::LOGIN, $outcome, $startedAt, $errorType);
         }
-        $this->session->set('usr', serialize($this->loggedIn));
-        if ($remember) {
-            $this->session->setParams(
-                time() + (3600 * 24 * 30)
-            ); // 3600 seconds in an hour * 24 hours in a day * 30 days
-        }
-        return true;
     }
 
     /**
@@ -129,32 +166,73 @@ class Auth implements AuthInterface
      */
     public function register(string $email, string $password, string $name = ''): ?User
     {
-        $check = DB::select(($this->userClass)::TABLE, 'COUNT(*)')
-            ->where('[email] = %s', $email)
-            ->cacheExpire('5 minutes') // Cache for a short time
-            ->cacheTags($this->userClass::TABLE, 'users/login')
-            ->fetchSingle();
-        if ($check > 0) {
-            throw new DuplicateEmailException('User with this email already exists');
-        }
+        $startedAt = hrtime(true);
+        $outcome = AuthLifecycleEvent::FAILED;
+        $errorType = null;
 
-        $user = new ($this->userClass);
-        $user->name = $name;
-        $user->email = $email;
-        $user->password = $this->passwords->hash($password);
-        $user->type = UserType::getHostUserType() ?? (new UserType());
-        if (property_exists($user, 'id_user_type')) {
-            $user->id_user_type = $user->type->id ?? 1;
+        try {
+            $check = DB::select(($this->userClass)::TABLE, 'COUNT(*)')
+                ->where('[email] = %s', $email)
+                ->cacheExpire('5 minutes') // Cache for a short time
+                ->cacheTags($this->userClass::TABLE, 'users/login')
+                ->fetchSingle();
+            if ($check > 0) {
+                $outcome = AuthLifecycleEvent::DUPLICATE;
+                throw new DuplicateEmailException('User with this email already exists');
+            }
+
+            $user = new ($this->userClass);
+            $user->name = $name;
+            $user->email = $email;
+            $user->password = $this->passwords->hash($password);
+            $user->type = UserType::getHostUserType() ?? (new UserType());
+            if (property_exists($user, 'id_user_type')) {
+                $user->id_user_type = $user->type->id ?? 1;
+            }
+            try {
+                if ($user->insert()) {
+                    $outcome = AuthLifecycleEvent::SUCCESS;
+                    return $user;
+                }
+            } catch (ValidationException) {
+                $outcome = AuthLifecycleEvent::INVALID;
+                // TODO: Handle validation error
+            }
+
+            return null;
+        } catch (Throwable $exception) {
+            if ($outcome !== AuthLifecycleEvent::DUPLICATE) {
+                $outcome = AuthLifecycleEvent::ERROR;
+            }
+            $errorType = $exception::class;
+            throw $exception;
+        } finally {
+            $this->recordLifecycle(AuthLifecycleEvent::REGISTER, $outcome, $startedAt, $errorType);
+        }
+    }
+
+    private function recordLifecycle(
+        string $operation,
+        string $outcome,
+        int $startedAt,
+        ?string $errorType,
+    ): void {
+        $hook = self::$lifecycleHooks[$this] ?? null;
+        if ($hook === null) {
+            return;
         }
         try {
-            if ($user->insert()) {
-                return $user;
-            }
-        } catch (ValidationException) {
-            // TODO: Handle validation error
+            $hook->record(
+                new AuthLifecycleEvent(
+                    $operation,
+                    $outcome,
+                    (hrtime(true) - $startedAt) / 1_000_000_000,
+                    $errorType,
+                )
+            );
+        } catch (Throwable) {
+            // Lifecycle hooks must never affect authentication.
         }
-
-        return null;
     }
 
     public function loggedIn(): bool
