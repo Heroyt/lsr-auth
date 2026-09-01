@@ -81,13 +81,11 @@ readonly class LoggedIn implements Middleware
 
     protected function unauthorized(Request $request) : never {
         $this->session?->flashError($this->unauthorizedMessage);
-        $this->session?->flash('fromRequest', serialize($request));
         throw DispatchBreakException::createRedirect($this->unauthorizedUri);
     }
 
     protected function forbid(Request $request) : never {
         $this->session?->flashError($this->forbiddenMessage);
-        $this->session?->flash('fromRequest', serialize($request));
         throw DispatchBreakException::createRedirect($this->forbiddenUri);
     }
 

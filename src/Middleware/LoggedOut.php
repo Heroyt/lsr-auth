@@ -41,7 +41,6 @@ readonly class LoggedOut implements Middleware
         $this->auth->init();
         if ($this->auth->loggedIn() && $this->auth->getLoggedIn() !== null) {
             $this->session?->flashWarning($this->message);
-            $this->session?->flash('fromRequest', serialize($request));
             throw DispatchBreakException::createRedirect($this->redirect);
         }
         return $handler->handle($request);
