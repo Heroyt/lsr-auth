@@ -18,6 +18,11 @@
 			"Lsr\\Core\\Auth\\": "src/"
 		}
 	},
+	"autoload-dev": {
+		"psr-4": {
+			"TestCases\\": "tests/"
+		}
+	},
 	"authors": [
 		{
 			"name": "Tomáš Vojík",
