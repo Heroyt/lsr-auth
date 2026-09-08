@@ -19,8 +19,8 @@ class UserType extends Model
     public bool $superAdmin = false;
     public bool $host = false;
 
-    /** @var non-empty-string[] */
-    protected array $rights = [];
+    /** @var non-empty-string[] Uninitialized until loaded; an empty result is cached too. */
+    protected array $rights;
     /** @var array<string,bool> */
     protected array $hasRights = [];
 
