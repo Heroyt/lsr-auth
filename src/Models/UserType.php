@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lsr\Core\Auth\Models;
 
 use Lsr\Db\DB;
@@ -9,7 +11,6 @@ use Lsr\Orm\Model;
 #[PrimaryKey('id_user_type')]
 class UserType extends Model
 {
-
     public const string TABLE = 'user_types';
     public const string TYPE_RIGHTS_TABLE = 'user_type_rights';
 
@@ -23,39 +24,39 @@ class UserType extends Model
     /** @var array<string,bool> */
     protected array $hasRights = [];
 
-    public static function getHostUserType() : ?UserType {
+    public static function getHostUserType(): ?UserType {
         return self::query()->where('[host] = 1')->first();
     }
 
     /**
      * @return non-empty-string[]
      */
-    public function getRights() : array {
-        if (!isset($this->rights)) {
+    public function getRights(): array {
+        if ( ! isset($this->rights)) {
             /** @var non-empty-string[] $rights */
             $rights = DB::select($this::TYPE_RIGHTS_TABLE, 'right')
-                        ->where('%n = %i', $this::getPrimaryKey(), $this->id)
-                        ->fetchPairs();
+                ->where('%n = %i', $this::getPrimaryKey(), $this->id)
+                ->fetchPairs();
             $this->rights = $rights;
         }
         return $this->rights;
     }
 
-    public function hasRight(string $right) : bool {
+    public function hasRight(string $right): bool {
         if ($this->superAdmin) {
             return true;
         }
         if (isset($this->hasRights[$right])) {
             return $this->hasRights[$right];
         }
-        if (!empty($this->rights)) {
+        if ( ! empty($this->rights)) {
             $this->hasRights[$right] = in_array($right, $this->rights, true);
             return $this->hasRights[$right];
         }
 
         $test = DB::select($this::TYPE_RIGHTS_TABLE, 'COUNT(*)')
-                  ->where('%n = %i AND [right] = %s', $this::getPrimaryKey(), $this->id, $right)
-                  ->fetchSingle();
+            ->where('%n = %i AND [right] = %s', $this::getPrimaryKey(), $this->id, $right)
+            ->fetchSingle();
         $this->hasRights[$right] = $test > 0;
         return $this->hasRights[$right];
     }

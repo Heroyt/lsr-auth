@@ -9,11 +9,11 @@ use Lsr\Core\Auth\Services\Auth;
 use Lsr\Interfaces\SessionInterface;
 use Nette\Security\Passwords;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class AuthLifecycleTest extends TestCase
 {
-    public function testLogoutReportsOutcomeWithoutUserOrSessionData(): void
-    {
+    public function test_logout_reports_outcome_without_user_or_session_data(): void {
         $session = $this->createMock(SessionInterface::class);
         $session->expects(self::once())->method('delete')->with('usr');
         $hook = new RecordingAuthLifecycleHook();
@@ -28,8 +28,7 @@ final class AuthLifecycleTest extends TestCase
         self::assertGreaterThanOrEqual(0.0, $hook->events[0]->durationSeconds);
     }
 
-    public function testHookFailureDoesNotAffectLogout(): void
-    {
+    public function test_hook_failure_does_not_affect_logout(): void {
         $session = $this->createMock(SessionInterface::class);
         $session->expects(self::once())->method('delete')->with('usr');
         $hook = new RecordingAuthLifecycleHook();
@@ -39,9 +38,8 @@ final class AuthLifecycleTest extends TestCase
         $auth->logout();
     }
 
-    public function testLifecycleHookIsExcludedFromSerialization(): void
-    {
-        $auth = (new \ReflectionClass(Auth::class))->newInstanceWithoutConstructor();
+    public function test_lifecycle_hook_is_excluded_from_serialization(): void {
+        $auth = (new ReflectionClass(Auth::class))->newInstanceWithoutConstructor();
         $auth->setLifecycleHook(new RecordingAuthLifecycleHook());
 
         self::assertStringNotContainsString(RecordingAuthLifecycleHook::class, serialize($auth));

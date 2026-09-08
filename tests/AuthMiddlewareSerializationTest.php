@@ -17,8 +17,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 final class AuthMiddlewareSerializationTest extends TestCase
 {
-    public function testLoggedOutRedirectIgnoresRuntimeRequestAttributes(): void
-    {
+    public function test_logged_out_redirect_ignores_runtime_request_attributes(): void {
         $user = $this->createStub(User::class);
         $auth = $this->createStub(Auth::class);
         $auth->method('loggedIn')->willReturn(true);
@@ -27,7 +26,7 @@ final class AuthMiddlewareSerializationTest extends TestCase
         $session->expects(self::once())->method('flashWarning');
         $session->expects(self::never())->method('flash');
         $request = (new Request(new ServerRequest('GET', '/login')))
-            ->withAttribute('runtimeService', static fn() => null);
+            ->withAttribute('runtimeService', static fn () => null);
 
         $this->expectException(DispatchBreakException::class);
 
@@ -37,15 +36,14 @@ final class AuthMiddlewareSerializationTest extends TestCase
         );
     }
 
-    public function testLoggedInUnauthorizedRedirectIgnoresRuntimeRequestAttributes(): void
-    {
+    public function test_logged_in_unauthorized_redirect_ignores_runtime_request_attributes(): void {
         $auth = $this->createStub(Auth::class);
         $auth->method('loggedIn')->willReturn(false);
         $session = $this->createMock(SessionInterface::class);
         $session->expects(self::once())->method('flashError');
         $session->expects(self::never())->method('flash');
         $request = (new Request(new ServerRequest('GET', '/account')))
-            ->withAttribute('runtimeService', static fn() => null);
+            ->withAttribute('runtimeService', static fn () => null);
 
         $this->expectException(DispatchBreakException::class);
 
@@ -55,8 +53,7 @@ final class AuthMiddlewareSerializationTest extends TestCase
         );
     }
 
-    public function testLoggedInForbiddenRedirectIgnoresRuntimeRequestAttributes(): void
-    {
+    public function test_logged_in_forbidden_redirect_ignores_runtime_request_attributes(): void {
         $user = $this->createStub(User::class);
         $user->method('hasRight')->willReturn(false);
         $auth = $this->createStub(Auth::class);
@@ -66,7 +63,7 @@ final class AuthMiddlewareSerializationTest extends TestCase
         $session->expects(self::once())->method('flashError');
         $session->expects(self::never())->method('flash');
         $request = (new Request(new ServerRequest('GET', '/administration')))
-            ->withAttribute('runtimeService', static fn() => null);
+            ->withAttribute('runtimeService', static fn () => null);
 
         $this->expectException(DispatchBreakException::class);
 

@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lsr\Core\Auth\Exceptions;
 
-class DuplicateEmailException extends \Exception
-{
+use Exception;
 
+class DuplicateEmailException extends Exception
+{
 }

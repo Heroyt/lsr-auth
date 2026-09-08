@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Lsr\Core\Auth\Middleware;
-
 
 use Lsr\Core\Auth\Models\User;
 use Lsr\Core\Auth\Services\Auth;
@@ -19,7 +19,6 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 readonly class LoggedOut implements Middleware
 {
-
     /**
      * @param  Auth<T>  $auth
      */
@@ -28,7 +27,8 @@ readonly class LoggedOut implements Middleware
         public string                   $message = 'Již jste přihlášen.',
         protected string | UriInterface $redirect = '/',
         protected ?SessionInterface     $session = null,
-    ) {}
+    ) {
+    }
 
     /**
      * Handles a request - checks if the user is logged out
@@ -37,7 +37,7 @@ readonly class LoggedOut implements Middleware
      * @param  RequestHandlerInterface  $handler
      * @return ResponseInterface
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface {
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface {
         $this->auth->init();
         if ($this->auth->loggedIn() && $this->auth->getLoggedIn() !== null) {
             $this->session?->flashWarning($this->message);

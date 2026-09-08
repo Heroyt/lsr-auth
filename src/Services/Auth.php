@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lsr\Core\Auth\Services;
 
 use Lsr\Core\App;
-use Lsr\Core\Auth\Lifecycle\AuthLifecycleEvent;
-use Lsr\Core\Auth\Lifecycle\AuthLifecycleHookInterface;
 use Lsr\Core\Auth\Dto\UserRow;
 use Lsr\Core\Auth\Exceptions\DuplicateEmailException;
+use Lsr\Core\Auth\Lifecycle\AuthLifecycleEvent;
+use Lsr\Core\Auth\Lifecycle\AuthLifecycleHookInterface;
 use Lsr\Core\Auth\Models\User;
 use Lsr\Core\Auth\Models\UserType;
 use Lsr\Db\DB;
@@ -43,15 +45,13 @@ class Auth implements AuthInterface
     ) {
     }
 
-    public function setLifecycleHook(AuthLifecycleHookInterface $hook): static
-    {
+    public function setLifecycleHook(AuthLifecycleHookInterface $hook): static {
         self::$lifecycleHooks ??= new WeakMap();
         self::$lifecycleHooks[$this] = $hook;
         return $this;
     }
 
-    public function __wakeup(): void
-    {
+    public function __wakeup(): void {
         $session = App::getServiceByType(SessionInterface::class);
         assert($session !== null);
         $this->session = $session;
@@ -69,8 +69,7 @@ class Auth implements AuthInterface
      * @throws ValidationException
      * @throws DirectoryCreationException
      */
-    public function init(): void
-    {
+    public function init(): void {
         $this->loggedIn = null;
         /** @var string|null $usr */
         $usr = $this->session->get('usr');
@@ -84,8 +83,7 @@ class Auth implements AuthInterface
         }
     }
 
-    public function logout(): void
-    {
+    public function logout(): void {
         $startedAt = hrtime(true);
         $outcome = AuthLifecycleEvent::SUCCESS;
         $errorType = null;
@@ -112,8 +110,7 @@ class Auth implements AuthInterface
      * @return bool If the login was successful
      * @throws ValidationException
      */
-    public function login(string $email, #[SensitiveParameter] string $password, bool $remember = false): bool
-    {
+    public function login(string $email, #[SensitiveParameter] string $password, bool $remember = false): bool {
         $startedAt = hrtime(true);
         $outcome = AuthLifecycleEvent::ERROR;
         $errorType = null;
@@ -124,11 +121,11 @@ class Auth implements AuthInterface
                 ->cacheExpire('5 minutes') // Cache for a short time
                 ->cacheTags($this->userClass::TABLE, 'users/login')
                 ->fetchDto(UserRow::class);
-            if (!isset($user)) {
+            if ( ! isset($user)) {
                 $outcome = AuthLifecycleEvent::INVALID_CREDENTIALS;
                 return false; // User does not exist
             }
-            if (!$this->passwords->verify($password, $user->password)) {
+            if ( ! $this->passwords->verify($password, $user->password)) {
                 $outcome = AuthLifecycleEvent::INVALID_CREDENTIALS;
                 return false; // Invalid password
             }
@@ -141,7 +138,7 @@ class Auth implements AuthInterface
             $this->session->set('usr', serialize($this->loggedIn));
             if ($remember) {
                 $this->session->setParams(
-                    time() + (3600 * 24 * 30)
+                    time() + (3600 * 24 * 30),
                 ); // 3600 seconds in an hour * 24 hours in a day * 30 days
             }
             $outcome = AuthLifecycleEvent::SUCCESS;
@@ -164,8 +161,7 @@ class Auth implements AuthInterface
      * @return T|null
      * @throws DuplicateEmailException
      */
-    public function register(string $email, string $password, string $name = ''): ?User
-    {
+    public function register(string $email, string $password, string $name = ''): ?User {
         $startedAt = hrtime(true);
         $outcome = AuthLifecycleEvent::FAILED;
         $errorType = null;
@@ -228,23 +224,21 @@ class Auth implements AuthInterface
                     $outcome,
                     (hrtime(true) - $startedAt) / 1_000_000_000,
                     $errorType,
-                )
+                ),
             );
         } catch (Throwable) {
             // Lifecycle hooks must never affect authentication.
         }
     }
 
-    public function loggedIn(): bool
-    {
+    public function loggedIn(): bool {
         return isset($this->loggedIn);
     }
 
     /**
      * @return T|null
      */
-    public function getLoggedIn(): ?User
-    {
+    public function getLoggedIn(): ?User {
         return $this->loggedIn;
     }
 
@@ -253,8 +247,7 @@ class Auth implements AuthInterface
      *
      * @return static
      */
-    public function setLoggedIn(User $loggedIn): static
-    {
+    public function setLoggedIn(User $loggedIn): static {
         $this->loggedIn = $loggedIn;
         $this->session->set('usr', serialize($this->loggedIn));
         return $this;
@@ -267,9 +260,8 @@ class Auth implements AuthInterface
      *
      * @return bool
      */
-    public function hasRight(string $right): bool
-    {
-        if (!isset($this->loggedIn)) {
+    public function hasRight(string $right): bool {
+        if ( ! isset($this->loggedIn)) {
             return false;
         }
         return $this->loggedIn->hasRight($right);
@@ -280,9 +272,8 @@ class Auth implements AuthInterface
      *
      * @return string[]
      */
-    public function getRights(): array
-    {
-        if (!isset($this->loggedIn)) {
+    public function getRights(): array {
+        if ( ! isset($this->loggedIn)) {
             return [];
         }
         return $this->loggedIn->getRights();

@@ -14,8 +14,7 @@ final class RecordingAuthLifecycleHook implements AuthLifecycleHookInterface
     public array $events = [];
     public bool $fail = false;
 
-    public function record(AuthLifecycleEvent $event): void
-    {
+    public function record(AuthLifecycleEvent $event): void {
         if ($this->fail) {
             throw new RuntimeException('Hook failure');
         }

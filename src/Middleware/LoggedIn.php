@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Lsr\Core\Auth\Middleware;
-
 
 use Lsr\Core\Auth\Models\User;
 use Lsr\Core\Auth\Services\Auth;
@@ -35,7 +35,8 @@ readonly class LoggedIn implements Middleware
         public string | UriInterface $unauthorizedUri = 'login',
         public string | UriInterface $forbiddenUri = '/',
         protected ?SessionInterface  $session = null,
-    ) {}
+    ) {
+    }
 
     /**
      * Handles a request - checks if the user is logged in and has enough rights
@@ -45,19 +46,19 @@ readonly class LoggedIn implements Middleware
      *
      * @return ResponseInterface
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface {
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface {
         assert($request instanceof Request);
         $this->auth->init();
-        if (!$this->auth->loggedIn()) {
+        if ( ! $this->auth->loggedIn()) {
             $this->unauthorized($request);
         }
-        if (!empty($this->rights)) {
+        if ( ! empty($this->rights)) {
             /** @var User $user */
             $user = $this->auth->getLoggedIn();
             // First level is AND, second level is OR
             foreach ($this->rights as $right) {
                 if (is_string($right)) {
-                    if (!$user->hasRight($right)) {
+                    if ( ! $user->hasRight($right)) {
                         $this->forbid($request);
                     }
                     continue;
@@ -70,7 +71,7 @@ readonly class LoggedIn implements Middleware
                         break;
                     }
                 }
-                if (!$hasRight) {
+                if ( ! $hasRight) {
                     $this->forbid($request);
                 }
             }
@@ -79,12 +80,12 @@ readonly class LoggedIn implements Middleware
         return $handler->handle($request);
     }
 
-    protected function unauthorized(Request $request) : never {
+    protected function unauthorized(Request $request): never {
         $this->session?->flashError($this->unauthorizedMessage);
         throw DispatchBreakException::createRedirect($this->unauthorizedUri);
     }
 
-    protected function forbid(Request $request) : never {
+    protected function forbid(Request $request): never {
         $this->session?->flashError($this->forbiddenMessage);
         throw DispatchBreakException::createRedirect($this->forbiddenUri);
     }
