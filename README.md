@@ -5,7 +5,7 @@
 ## Requirements
 
 - PHP `>=8.4`.
-- LSR interfaces `^0.3.4`, ORM `^0.3.7` and routing `^0.3.1 || ^0.4`.
+- LSR interfaces `^0.3.4`, ORM `^0.3.7` and routing `^0.3.1 || ^0.4 || ^0.5`.
 - Nette DI and Nette Security `^3.2`.
 - No PHP extensions are declared directly; ORM/database dependencies impose their own platform requirements. See [composer.json](composer.json).
 - A configured LSR database/ORM environment, application session implementation and user/rights schema. The supplied migrations use MySQL-style InnoDB definitions.
