@@ -13,7 +13,7 @@
 		"roave/security-advisories": "dev-latest",
 		"phpunit/phpunit": "^12",
 		"phpstan/phpstan": "^2",
-		"lsr/core": "^0.4 || ^0.5",
+		"lsr/core": "^0.4 || ^0.5 || ^0.6",
 		"friendsofphp/php-cs-fixer": "^3.95"
 	},
 	"scripts": {
@@ -42,7 +42,7 @@
 		"lsr/interfaces": "^0.3.4",
 		"nette/di": "^3.2",
 		"nette/security": "^3.2",
-		"lsr/orm": "^0.3.7",
+		"lsr/orm": "^0.3.7 || ^0.4",
 		"lsr/routing": "^0.3.1 || ^0.4 || ^0.5"
 	}
 }
