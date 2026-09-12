@@ -1,48 +1,48 @@
 {
-	"name": "lsr/auth",
-	"license": "MIT",
-  "version": "0.3.13-dev",
-	"description": "Laser framework core - Authentication.",
-	"repositories": [
-		{
-			"type": "composer",
-			"url": "https://packages.laserliga.cz"
-		}
-	],
-	"require-dev": {
-		"roave/security-advisories": "dev-latest",
-		"phpunit/phpunit": "^12",
-		"phpstan/phpstan": "^2",
-		"lsr/core": "^0.4 || ^0.5 || ^0.6",
-		"friendsofphp/php-cs-fixer": "^3.95"
-	},
-	"scripts": {
-		"cs:fix": "./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php",
-		"cbf": "@cs:fix",
-		"cs": "./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php --dry-run --diff"
-	},
-	"autoload": {
-		"psr-4": {
-			"Lsr\\Core\\Auth\\": "src/"
-		}
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"TestCases\\": "tests/"
-		}
-	},
-	"authors": [
-		{
-			"name": "Tomáš Vojík",
-			"email": "vojik@wboy.cz"
-		}
-	],
-	"require": {
-		"php": ">=8.4",
-		"lsr/interfaces": "^0.3.4",
-		"nette/di": "^3.2",
-		"nette/security": "^3.2",
-		"lsr/orm": "^0.3.7 || ^0.4",
-		"lsr/routing": "^0.3.1 || ^0.4 || ^0.5"
-	}
+  "name": "lsr/auth",
+  "license": "MIT",
+  "version": "0.3.13",
+  "description": "Laser framework core - Authentication.",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.laserliga.cz"
+    }
+  ],
+  "require-dev": {
+    "roave/security-advisories": "dev-latest",
+    "phpunit/phpunit": "^12",
+    "phpstan/phpstan": "^2",
+    "lsr/core": "^0.4 || ^0.5 || ^0.6",
+    "friendsofphp/php-cs-fixer": "^3.95"
+  },
+  "scripts": {
+    "cs:fix": "./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php",
+    "cbf": "@cs:fix",
+    "cs": "./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php --dry-run --diff"
+  },
+  "autoload": {
+    "psr-4": {
+      "Lsr\\Core\\Auth\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "TestCases\\": "tests/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Tom\u00e1\u0161 Voj\u00edk",
+      "email": "vojik@wboy.cz"
+    }
+  ],
+  "require": {
+    "php": ">=8.4",
+    "lsr/interfaces": "^0.3.4",
+    "nette/di": "^3.2",
+    "nette/security": "^3.2",
+    "lsr/orm": "^0.3.7 || ^0.4",
+    "lsr/routing": "^0.3.1 || ^0.4 || ^0.5"
+  }
 }
